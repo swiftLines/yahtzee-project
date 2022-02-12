@@ -34,25 +34,28 @@ function init() {
   rollCount = 0
 }
 
+function render() {
+
+}
+
 //rolls dice
-function diceRoll(evt) {
-// let diceId = parseInt(evt.target.id)
+function diceRoll(evt) { //evt needed??
+
   if (rollCount === 3) {
     return
   } else {
     diceX.forEach((dice) => {
       let diceValue = Math.floor(Math.random() * 5) + 1
       dice.innerText = diceValue;
-      //could just replace some code in here with reduce for dry code
+      //could just replace some code in here with reduce or another built in method for dry code
       rollTotal.push(diceValue)
     })
   }
-  //To get pick from rollTotal into pick[] can use div.value/target
 
   //track roll amount
   rollCount++
   
-  //total all dice values for a single roll
+  //***NEED to total all dice values for only a single roll
   let total = rollTotal.reduce((sum, cur) => {
     return sum + cur
   }, 0)
@@ -64,26 +67,26 @@ function diceRoll(evt) {
 }
 
 //allow player to select dice values they want to keep for their combo
-function selectDice(evt) {
+function selectDice(evt) { 
 
   let choice = parseInt(evt.target.innerText)
   picks.push(choice)
-  for (let i = 0; i < picks.length; i++) {
-    choices.innerText = picks[i]
-    //STILL NEED to have choices display all at once. picks[] may be clearing when new pick is selected
-    //ALSO SHOULD ONLY be able to pick a dice once!!
-  }
+  //XXXXXXXXXXXhave choices display all at once
+  choices.innerText = picks
+  //******ALSO SHOULD ONLY be able to pick a dice once!!
+
   console.log(picks)
-  //total dice selected
-  let total = selectTotal.reduce((sum, cur) => {
+  //XXXXXXXXXXsum up value of dice selected
+  let total = picks.reduce((sum, cur) => {
     return sum + cur
   }, 0)
   chooseDice.innerText = total;
-  console.log(total)
+  //***NEEDs to only be able to select each dice once (unless dice is put back...can deal with later that part later)
+
+//***display dice selected separately
+
 
 //NEED a total towards specific combos
-
-//display dice selected separately
 
 //player needs to be able to put back dice also and be able to reroll that dice 
 
