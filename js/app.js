@@ -68,27 +68,32 @@ function diceRoll(evt) { //evt needed??
 
 //allow player to select dice values they want to keep for their combo
 function selectDice(evt) { 
+  //NEED to be able to click under Your Picks to be able to reroll a dice/ put back / allow access to with diceX 
 
+  //if evt.target.id has been selected previously MAYBE.....
   let choice = parseInt(evt.target.innerText)
   picks.push(choice)
-  //XXXXXXXXXXXhave choices display all at once
+  //have choices display all at once
   choices.innerText = picks
-  //******ALSO SHOULD ONLY be able to pick a dice once!!
 
-  console.log(picks)
-  //XXXXXXXXXXsum up value of dice selected
+  //sum up value of dice selected
   let total = picks.reduce((sum, cur) => {
     return sum + cur
   }, 0)
   chooseDice.innerText = total;
-  //***NEEDs to only be able to select each dice once (unless dice is put back...can deal with later that part later)
 
-//***display dice selected separately
-
+  //XXXXXXXX Remove selected dice from play
+  evt.target.innerText = ''
 
 //NEED a total towards specific combos
 
-//player needs to be able to put back dice also and be able to reroll that dice 
+//******stop or remove the dice from picks[] after 3 rolls
+}
 
-// stop or remove the dice from picks[] after 3 rolls
+function putDiceBackIntoPlay() {
+//NEED to be able to click under Your Picks to be able to reroll a dice/ put back / allow access to with diceX 
+
+// ????? THIS MAY BE WHEN I NEED TO START CREATING THE PLAYER OBJECT BECAUSE OF EVENT HANDLING ??????
+
+//MAYBE NOT YET... MAKE CHOICES A LIST IN HTML AN CAN addEventListener
 }
