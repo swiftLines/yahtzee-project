@@ -30,6 +30,9 @@ function init() {
   for (let i = 0; i < 5; i++) {
     rollTotal[i] = null
   }
+
+  // d
+
   //initialize role counter
   rollCount = 0
 }
@@ -40,17 +43,48 @@ function render() {
 
 //rolls dice
 function diceRoll(evt) { //evt needed??
-
+  let diceValue
+  let iteration = 1
   if (rollCount === 3) {
+    // iteration = 0
     return
   } else {
-    diceX.forEach((dice) => {
-      let diceValue = Math.floor(Math.random() * 5) + 1
-      dice.innerText = diceValue;
+    //XXXXXXX KEEP DICE REMOVED from play not just after a single roll
+    // diceX.slice(0, size)
+    if (picks.length > 0) {
+      for (let dice of diceX) {
+        if (iteration === picks.length) {
+          dice.innerText = ''
+          console.log('hi')
+        } else {
+          diceValue = Math.floor(Math.random() * 5) + 1
+          dice.innerText = diceValue;
+          iteration++
+        }
+      }
+    } else {
+      diceX.forEach((dice) => {
+        diceValue = Math.floor(Math.random() * 5) + 1
+        dice.innerText = diceValue;
       //could just replace some code in here with reduce or another built in method for dry code
-      rollTotal.push(diceValue)
-    })
-  }
+        rollTotal.push(diceValue) 
+        
+      })
+    }
+    // }
+  // if (picks.length > 0) {
+  //   for (let i = 0; i < 5 - picks.length; i++) {
+  //     diceValue = Math.floor(Math.random() * 5) + 1
+  //   }
+  // }
+      
+    }
+
+    // if (picks.length > 0) {
+    //   //remove dice element
+    //   for(let i = 1 d)
+    //   dice.remove()
+    // }
 
   //track roll amount
   rollCount++
@@ -82,7 +116,8 @@ function selectDice(evt) {
   }, 0)
   chooseDice.innerText = total;
 
-  //XXXXXXXX Remove selected dice from play
+  //Remove selected dice from play
+  //*** KEEP DICE REMOVED from play not just after a single roll 
   evt.target.innerText = ''
 
 //NEED a total towards specific combos
@@ -90,10 +125,10 @@ function selectDice(evt) {
 //******stop or remove the dice from picks[] after 3 rolls
 }
 
-function putDiceBackIntoPlay() {
+function putDiceBackInPlay() {
 //NEED to be able to click under Your Picks to be able to reroll a dice/ put back / allow access to with diceX 
 
 // ????? THIS MAY BE WHEN I NEED TO START CREATING THE PLAYER OBJECT BECAUSE OF EVENT HANDLING ??????
 
-//MAYBE NOT YET... MAKE CHOICES A LIST IN HTML AN CAN addEventListener
+//MAYBE NOT YET... MAKE CHOICES A LIST IN HTML and CAN addEventListener
 }
