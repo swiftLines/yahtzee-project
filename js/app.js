@@ -6,20 +6,25 @@ let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
-const diceX = document.querySelectorAll('div')
+const diceX = document.querySelectorAll('#roll')
 const rollBtn = document.querySelector('button')
 let diceTotal = document.querySelector('#total')
 let chooseDice = document.querySelector('#select')
 let choices = document.querySelector('#choices')
 let messageEl = document.querySelector('#message')
+const pickdDice = document.querySelectorAll('#pick')
 
 /*----------------------------- Event Listeners -----------------------------*/
+
 rollBtn.addEventListener('click', diceRoll)
+
 diceX.forEach((dice) => {
   dice.addEventListener('click', selectDice)
 })
 
-
+pickdDice.forEach((pick) => {
+  pick.addEventListener('click', putDiceBackInPlay)
+})
 
 /*-------------------------------- Functions --------------------------------*/
 //call init()
@@ -96,7 +101,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
       }
     } else {
       diceX.forEach((dice) => {
-        diceValue = Math.floor(Math.random() * 5) + 1
+        diceValue = Math.floor(Math.random() * 6) + 1
         dice.innerText = diceValue;
       //maybe could just replace some code in here with reduce or another built in
       // method for dry code
@@ -125,14 +130,12 @@ function diceRoll(evt) { //REMOVE evt if dont use
 function selectDice(evt) { 
   //NEED to be able to click under Your Picks to be able to reroll a dice/ 
   //put back / allow access to with diceX 
-
   //if evt.target.id has been selected previously MAYBE.....
   let choice = parseInt(evt.target.innerText)
   picks.push(choice)
   //have choices display all at once
-  //***** Will need to place in html elements so that you can click to place 
-  //back into dice cup
-  choices.innerText = picks
+// ******* CAN REMOVE BELOW AFTER code to fill html elements below
+  //choices.innerText = picks
   console.log(picks)
   //sum up value of dice selected
   let total = picks.reduce((sum, cur) => {
@@ -141,20 +144,28 @@ function selectDice(evt) {
   chooseDice.innerText = total;
 
   //Remove selected dice from play
-  //*** KEEP DICE REMOVED from play not just after a single roll 
   evt.target.innerText = ''
+
+//***** Will need to place in html elements so that you can click to place 
+//back into dice cup
+pickdDice.forEach((pick) => {
+    pick.innerText = choice
+  // diceValue = Math.floor(Math.random() * 6) + 1
+  //       dice.innerText = diceValue;
+})
 
 //NEED a total towards specific combos
 
-//******stop or remove the dice from picks[] after 3 rolls
 }
 
-function putDiceBackInPlay() {
-//NEED to be able to click under Your Picks to be able to reroll a dice/ 
-//put back / allow access to with diceX 
+function putDiceBackInPlay(evt) {
+  console.log('hi')
+  let choice = parseInt(evt.target.innerText)
 
-// ????? THIS MAY BE WHEN I NEED TO START CREATING THE PLAYER OBJECT 
-//BECAUSE OF EVENT HANDLING ??????
-
-//MAYBE NOT YET... MAKE CHOICES A LIST IN HTML and CAN addEventListener
+  //remove from picks array with built in method
+  let element = picks.indexOf(choice)//splice.indexOf(choice)
+  picks.splice(element, 1)
+  //choices.innerText = picks
+  evt.target.innerText = ''
+  pickCount--
 }
