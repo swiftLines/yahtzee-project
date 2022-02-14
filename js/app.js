@@ -56,9 +56,9 @@ function render() {
   }
 
   if (turn === 1) {
-    message = `player ones roll`
+    message = `player one's roll`
   } else {
-    message = 'player twos roll'
+    message = `player two's roll`
   }
   
   messageEl.innerText = `${message}`
@@ -74,7 +74,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
 //***** NEED TO handle end turn events in this function or call to an endTurn() 
   if (rollCount === 3) {
     rollTotal = []
-    
+    picks = []
     render()
   } else {
     //Keep selected dice removed from play 
@@ -83,11 +83,13 @@ function diceRoll(evt) { //REMOVE evt if dont use
     if (picks.length > 0) {
       for (let dice of diceX) {
         if (pickCount === picks.length) {
-          dice.innerText = ''
+          // dice.innerText = ''
+          break
         } else {
           diceValue = Math.floor(Math.random() * 5) + 1
           dice.innerText = diceValue;
           pickCount++
+          console.log(pickCount)
         }
       }
     } else {
@@ -129,7 +131,7 @@ function selectDice(evt) {
   //***** Will need to place in html elements so that you can click to place 
   //back into dice cup
   choices.innerText = picks
-
+  console.log(picks)
   //sum up value of dice selected
   let total = picks.reduce((sum, cur) => {
     return sum + cur
