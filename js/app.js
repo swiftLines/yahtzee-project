@@ -2,7 +2,8 @@
 
 
 /*-------------------------------- Variables --------------------------------*/
-let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount
+let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
+putBackCount
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
@@ -12,7 +13,7 @@ let diceTotal = document.querySelector('#total')
 let chooseDice = document.querySelector('#select')
 let choices = document.querySelector('#choices')
 let messageEl = document.querySelector('#message')
-const pickdDice = document.querySelectorAll('#pick')
+const pickdDice = document.querySelectorAll('.pick')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -148,11 +149,24 @@ function selectDice(evt) {
 
 //***** Will need to place in html elements so that you can click to place 
 //back into dice cup
-pickdDice.forEach((pick) => {
-    pick.innerText = choice
-  // diceValue = Math.floor(Math.random() * 6) + 1
-  //       dice.innerText = diceValue;
-})
+   let newDiv = document.createElement('div')
+   newDiv.addEventListener('click', putDiceBackInPlay)
+   newDiv.innerText = choice
+   choices.appendChild(newDiv)
+// document.addEventListener("click", evt => {
+//   if (evt.target.matches("div")) {
+//     console.log("hi")
+//   }
+// })
+// pickdDice
+// for (let pick of pickdDice) {
+//   pick.innerText = choice
+//   break
+// }
+// pickdDice.forEach((pick) => {
+//     pick.innerText = choice
+//     console
+// })
 
 //NEED a total towards specific combos
 
@@ -163,7 +177,7 @@ function putDiceBackInPlay(evt) {
   let choice = parseInt(evt.target.innerText)
 
   //remove from picks array with built in method
-  let element = picks.indexOf(choice)//splice.indexOf(choice)
+  let element = picks.indexOf(choice)
   picks.splice(element, 1)
   //choices.innerText = picks
   evt.target.innerText = ''
