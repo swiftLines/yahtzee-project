@@ -75,6 +75,8 @@ function diceRoll(evt) { //REMOVE evt if dont use
   if (rollCount === 3) {
     rollTotal = []
     picks = []
+    choices.innerText = ''
+    chooseDice.innerText = ''
     render()
   } else {
     //Keep selected dice removed from play 
