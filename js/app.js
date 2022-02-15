@@ -181,7 +181,7 @@ function putDiceBackInPlay(evt) {
 }
 
 function endTurn() {
-  // 1) need to push any additional dice values on board to picks[]
+  // 1) RESOLVED! need to push any additional dice values on board to picks[]
   let leftOverDice
 
   for (let dice of diceX) {
@@ -192,19 +192,35 @@ function endTurn() {
       picks.push(leftOverDice)
     }
   }
- 
-  // 2) compare picks[] (or may need a new data structure) to categories so that player can be aware of 
-  //    categories qualified for
+  console.log(picks)
+  // 2) MAYBE DO LATER FEATURE MAY NOT BE NECESSARY! compare picks[] 
+  //    (or may need a new data structure) to categories
+  //    so that player can be aware of categories qualified for compare
+  //      ***** may need to put picks array into specific order to compare
+  //            in certain situations or may always want put them in
+  //            sequence from lowest to highest
+  //      
   // 3) allow player to apply their picks to a category 
+  //      ***** display all categories as scorecard
+  //      ***** allow player to click on a category element to apply picks
+  //      ***** ensure player can use any round towards any category
+  //            wether it qualifies for points or not, but only can select
+  //            category once other than yahtzee. Ensure bonus yahtzee cannot
+  //            be selected if an official scoring yahtzee has not been satisfied
   // 4) save category score in player object
   // 5) clear appropriate variables and data structures to prepare for next 
-  // turn/round after certain conditions such as score has been set in player
-  // scorecard/ player object
+  //    turn/round after certain conditions such as score has been set in 
+  //    player scorecard/player object
 
   //MAYBE handle some of the below statements in init()
-  // rollTotal = []
-  // picks = []
-  // choices.innerText = ''
-  // chooseDice.innerText = ''
-  // render()
+  rollTotal = []
+  picks = []
+  choices.innerText = ''
+  chooseDice.innerText = ''
+  render()
+}
+
+function comparePicks() {
+  //maybe compare picks[] with each array in a category object of arrays 
+  
 }
