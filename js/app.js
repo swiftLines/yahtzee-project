@@ -3,7 +3,7 @@
 
 /*-------------------------------- Variables --------------------------------*/
 let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
-putBackCount
+putBackCount, boardDice=[]
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
@@ -76,16 +76,16 @@ function render() {
 //rolls dice
 function diceRoll(evt) { //REMOVE evt if dont use 
 
-  let diceValue
-//***** NEED TO handle end turn events in this function or call to an endTurn() 
+  let diceValue 
+// **** Add another global array to keep track of dice values on board
   if (rollCount === 3) {
-    //endTurn()
+    endTurn()
     //Maybe put below statements into endTurn()
-    rollTotal = []
-    picks = []
-    choices.innerText = ''
-    chooseDice.innerText = ''
-    render()
+    // rollTotal = []
+    // picks = []
+    // choices.innerText = ''
+    // chooseDice.innerText = ''
+    // render()
   } else {
     //Keep selected dice removed from play 
     if (picks.length > 0) {
@@ -97,7 +97,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
           diceValue = Math.floor(Math.random() * 5) + 1
           dice.innerText = diceValue;
           pickCount++
-          console.log(pickCount)
+          
         }
       }
     } else {
@@ -106,8 +106,10 @@ function diceRoll(evt) { //REMOVE evt if dont use
         dice.innerText = diceValue;
       // maybe use buit-in method for dry code
         rollTotal.push(diceValue) 
-        
+        //Fill array with dice on board ***** May not need boardDice[]
+        boardDice.push(diceValue)
       })
+      //console.log(boardDice)
     }
   }
 
@@ -179,12 +181,25 @@ function putDiceBackInPlay(evt) {
 }
 
 function endTurn() {
-  // 1) need to push any additional dice on board to picks[]
+  // 1) need to push any additional dice values on board to picks[]
+  let leftOverDice
+
+  for (let dice of diceX) {
+    leftOverDice = parseInt(dice.innerText)
+    if (isNaN(leftOverDice)) {
+      break
+    } else {
+      picks.push(leftOverDice)
+    }
+  }
+ 
   // 2) compare picks[] (or may need a new data structure) to categories so that player can be aware of 
   //    categories qualified for
   // 3) allow player to apply their picks to a category 
   // 4) save category score in player object
-  // 5) clear appropriate variables and data structures to prepare for next turn/round
+  // 5) clear appropriate variables and data structures to prepare for next 
+  // turn/round after certain conditions such as score has been set in player
+  // scorecard/ player object
 
   //MAYBE handle some of the below statements in init()
   // rollTotal = []
