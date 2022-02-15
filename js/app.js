@@ -14,6 +14,8 @@ let chooseDice = document.querySelector('#select')
 let choices = document.querySelector('#choices')
 let messageEl = document.querySelector('#message')
 const pickdDice = document.querySelectorAll('.pick')
+const upperSec = document.querySelectorAll('#upper')
+const lowerSec = document.querySelectorAll('#lower')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -27,6 +29,13 @@ pickdDice.forEach((pick) => {
   pick.addEventListener('click', putDiceBackInPlay)
 })
 
+upperSec.forEach((cat) => {
+  cat.addEventListener('click', applyScoreToCard)
+})
+
+lowerSec.forEach((cat) => {
+  cat.addEventListener('click', applyScoreToCard)
+})
 /*-------------------------------- Functions --------------------------------*/
 //call init()
 init()
@@ -135,6 +144,8 @@ function selectDice(evt) {
   //have choices display all at once
 
   //sum up value of dice selected
+  //***** maybe do not have this but can be used as a feature to give 
+  //      running total towards a suggested category player is going for 
   let total = picks.reduce((sum, cur) => {
     return sum + cur
   }, 0)
@@ -149,6 +160,10 @@ function selectDice(evt) {
    newDiv.addEventListener('click', putDiceBackInPlay)
    newDiv.innerText = choice
    choices.appendChild(newDiv)
+
+// ***** Dont forget to remove dice value from select total if feature
+//        is included
+
 // document.addEventListener("click", evt => {
 //   if (evt.target.matches("div")) {
 //     console.log("hi")
@@ -218,6 +233,16 @@ function endTurn() {
   choices.innerText = ''
   chooseDice.innerText = ''
   render()
+}
+
+function applyScoreToCard(evt) {
+  //temporarily use reduce to sum all dice in picks[]
+  let total = picks.reduce((sum, cur) => {
+    return sum + cur
+  }, 0)
+  chooseDice.innerText = total;
+
+  
 }
 
 function comparePicks() {
