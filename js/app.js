@@ -139,6 +139,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
 
 //allow player to select dice values they want to keep for their combo
 function selectDice(evt) { 
+  //***** only allow 5 values in pics[] 
   let choice = parseInt(evt.target.innerText)
   picks.push(choice)
   //have choices display all at once
@@ -156,6 +157,7 @@ function selectDice(evt) {
 
 //place in html elements so that you can click to place 
 //back into dice cup
+// ***** Maybe create a function for creating new divs
    let newDiv = document.createElement('div')
    newDiv.addEventListener('click', putDiceBackInPlay)
    newDiv.innerText = choice
@@ -163,6 +165,9 @@ function selectDice(evt) {
 
 // ***** Dont forget to remove dice value from select total if feature
 //        is included
+
+//  ***** need button or way to end turn if player chooses to not use
+//        all rolls
 
 // document.addEventListener("click", evt => {
 //   if (evt.target.matches("div")) {
@@ -207,6 +212,7 @@ function endTurn() {
       picks.push(leftOverDice)
     }
   }
+  console.log('in end turn')
   console.log(picks)
   // 2) MAYBE DO LATER FEATURE MAY NOT BE NECESSARY! compare picks[] 
   //    (or may need a new data structure) to categories
@@ -222,27 +228,46 @@ function endTurn() {
   //            wether it qualifies for points or not, but only can select
   //            category once other than yahtzee. Ensure bonus yahtzee cannot
   //            be selected if an official scoring yahtzee has not been satisfied
+  // applyScoreToCard()
   // 4) save category score in player object
   // 5) clear appropriate variables and data structures to prepare for next 
   //    turn/round after certain conditions such as score has been set in 
   //    player scorecard/player object
 
   //MAYBE handle some of the below statements in init()
-  rollTotal = []
-  picks = []
-  choices.innerText = ''
-  chooseDice.innerText = ''
-  render()
+  // rollTotal = []
+  // picks = []
+  // choices.innerText = ''
+  // chooseDice.innerText = ''
+  // render()
 }
 
 function applyScoreToCard(evt) {
+  console.log('in applyScoreToCard')
   //temporarily use reduce to sum all dice in picks[]
+  //***** Could have a funtion to handle total
   let total = picks.reduce((sum, cur) => {
     return sum + cur
   }, 0)
   chooseDice.innerText = total;
 
+  //apply total to selected element
   
+  //if evt is from upper section 
+  let id = parseInt(evt.target.id)
+  console.log(id)
+  // for (let i = 0; i < upperSec.length; i++) {
+  //   console.log(total)
+  //   if (i === id) {
+     let newDiv = document.createElement('div')
+    //  newDiv.addEventListener('click', putDiceBackInPlay)
+     newDiv.innerText = total
+     console.log(newDiv)
+     upperSec[id].appendChild(newDiv)
+    // }
+  // }
+
+  //if evt is from lower section
 }
 
 function comparePicks() {
