@@ -201,7 +201,7 @@ function endTurn() {
   //            sequence from lowest to highest
   //      
   // 3) allow player to apply their picks to a category 
-  //      ***** display all categories as scorecard
+  //      ***** display all categories as scorecard (start with creating HTML elements)
   //      ***** allow player to click on a category element to apply picks
   //      ***** ensure player can use any round towards any category
   //            wether it qualifies for points or not, but only can select
