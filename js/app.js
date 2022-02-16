@@ -327,9 +327,15 @@ picks = [5,2,5,5,5]
         }
         return obj
       }, {})
-      //check if values has a pair and 3 of a kind by either:
-        // A) if values[0] = 2 OR values[0] 3 AND values[1] = 2 OR values[1] = 3
-        // B) if values contains 2 keys
+      if(values[0] === 3 || values[1] === 3) {
+        sum = picks.reduce((prev, cur) => prev + cur, 0)
+        //element.innertext = sum  //OR MAYBE I could somehow read all category
+                                  //scores from object and place in card
+        //player.category = sum
+      } else {
+        //element.innertext = 0
+        //player.category = 0
+      }
       break;
   //****> else if evt comes from id#7
     case 7://Four of a Kind
@@ -343,7 +349,7 @@ picks = [5,2,5,5,5]
         }
         return obj
       }, {})
-      if ((values[0] === 4 || values[0] === 1) && (values[1] === 4 || values[1] === 1)) {
+      if (values[0] === 4 || values[1] === 4) {
         sum = picks.reduce((prev, cur) => prev + cur, 0)
         //element.innertext = sum
         //player.category = sum
