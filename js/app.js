@@ -278,18 +278,18 @@ function applyScoreToCard(evt) {
 
   //**>if evt comes from upperSec
   
-  let catNum = 1  //parseInt(evt.target.id)
+  let catNum = 11  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
   //****>   sum === 0
   //****>   else  execute below statements 
-  let eligibleNums = picks.filter(num => num === catNum)
-  sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
+  // let eligibleNums = picks.filter(num => num === catNum)
+  // sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
   //element.innertext = sum
   //Do below if player stay with 2 player and object is needed
   //player.category = sum
-  console.log(sum)
+  // console.log(sum)
 
   // let value
   // let sum = 0
@@ -302,38 +302,61 @@ function applyScoreToCard(evt) {
   //   }
   // }
   // sum /= 2
-
+picks = [5,5,5,5,5]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
+          // ALSO can have an array 1 - 5 and if number in picks array has 
+          // array[i] then place it in an array by pushing i, then score
   //COULD DO CONDITIONAL THAT CONSIDERS DICE VALUE RATHER THAN EVENT
   //ALSO COULD BE A GOOD PLACE FOR A SWITCH STATEMENT!!! DONT FORGET TO USE BREAK
-  //**> else evt comes from lower section 
-  //****> if evt comes from id#6
-  //******> if picks[] has less than 3 of a kind add score of 0 to card and player
-            //??Do I really need to keep track of card and player obj or can
+  //??Do I really need to keep track of card and player obj or can
             //??I just get values from card to do end of game totals?
-  //******> else total all numbers and add score of 0 to card and player
+  //**> else evt comes from lower section 
+  switch (catNum) {
+  //****> if evt comes from id#6
+    case 6:
+      //******> if picks[] has less than 3 of a kind add score of 0 to card and player
+      //if(arr)
+      //******> else total all numbers and add score of 0 to card and player
+      break;
   //****> else if evt comes from id#7
+    case 7:
   //******> if picks[] has less than 4 of a kind add score of 0 to card and player
   //******> else total all numbers and add score of 0 to card and player
+      break;
   //****> else if evt comes from id#8
+    case 8:
   //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
   //******> else add score of 25 to card and player
   //****> else if evt comes from id#9
+      break;
+    case 9:
   //******> if picks[] does not contain a sequence of four numbers set score to 0
   //******> else set scores to 30 on card and player obj
   //****> else if evt comes from id#10
+      break;
+    case 10:
+      console.log('in ten')
   //******> if picks[] does not contain a sequence of 5 numbers set score to 0
   //******> else set scores to 40 on card and player obj
   //****> else if evt comes from id#11
+      break;
+    case 11:
   //******> if picks[] does not contain all same numbers set score to 0
+      if(picks.every((num, i, arr) => num === arr[0])){
+        console.log('Yahtzee!!')
+      }
   //******> else set scores to 50 and (unhide an element for Bonus Yahtzee)possible bonus feature
   //****> else if evt comes from id#12
+      break;
+    case 12:
   //******> Sum up all dice and set scores to sum
   //****> else if evt comes from id#13 after unhidden
+      break;
+    case 13://possible bonus feature
   //******> Add score of 100
-         
+  }//end switch         
 
 
   //handle totals and added bonuses from sections MAYBE in another funtion
