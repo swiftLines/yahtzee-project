@@ -14,8 +14,8 @@ let chooseDice = document.querySelector('#select')
 let choices = document.querySelector('#choices')
 let messageEl = document.querySelector('#message')
 const pickdDice = document.querySelectorAll('.pick')
-const upperSec = document.querySelectorAll('#upper')
-const lowerSec = document.querySelectorAll('#lower')
+const upperSec = document.querySelectorAll('.upper')
+const lowerSec = document.querySelectorAll('.lower')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -242,32 +242,71 @@ function endTurn() {
   // render()
 }
 
+// ****** MAKE it to where this function can only be called after third roll
+//by placing it previously on the call stack
 function applyScoreToCard(evt) {
   console.log('in applyScoreToCard')
   //temporarily use reduce to sum all dice in picks[]
   //***** Could have a funtion to handle total
-  let total = picks.reduce((sum, cur) => {
-    return sum + cur
-  }, 0)
-  chooseDice.innerText = total;
+  // let total = picks.reduce((sum, cur) => {
+  //   return sum + cur
+  // }, 0)
+  // chooseDice.innerText = total;
 
-  //apply total to selected element
+  // //apply total to selected element
   
-  //if evt is from upper section 
-  let id = parseInt(evt.target.id)
-  console.log(id)
-  // for (let i = 0; i < upperSec.length; i++) {
-  //   console.log(total)
-  //   if (i === id) {
-     let newDiv = document.createElement('div')
-    //  newDiv.addEventListener('click', putDiceBackInPlay)
-     newDiv.innerText = total
-     console.log(newDiv)
-     upperSec[id].appendChild(newDiv)
-    // }
+  // //if evt is from upper section 
+  // let id = parseInt(evt.target.id)
+  // console.log(id)
+  // // for (let i = 0; i < upperSec.length; i++) {
+  // //   console.log(total)
+  // //   if (i === id) {
+  //    let newDiv = document.createElement('div')
+  //   //  newDiv.addEventListener('click', putDiceBackInPlay)
+  //    newDiv.innerText = total
+  //    console.log(newDiv)
+  //    upperSec[id].appendChild(newDiv)
+  //   // }
   // }
 
   //if evt is from lower section
+
+  //come up with score based off category player selected
+ //  ***************************
+  //if a category from upper section was selected
+  //sum up all of players dice that match the number for that category
+
+  //**>if evt comes from upperSec
+  
+  let catNum = 1  //parseInt(evt.target.id)
+  let sum 
+  
+  //****> if(!picks.includes(catNum))
+  //****>   sum === 0
+  //****>   else  execute below statements 
+  let eligibleNums = arr.filter(num => num === one)
+  sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
+  //element.innertext = sum
+  console.log(sum)
+
+  // let value
+  // let sum = 0
+  // for (let i = 0; i < arr.length; i++) {
+  //   for (let j = 0; j < arr.length; j++) {
+  //     if (arr[i] === arr[j] && i !== j) {
+  //       sum += arr[i]
+  //       value = arr[i]
+  //     }
+  //   }
+  // }
+  // sum /= 2
+
+//  *************************************** 
+  // if a category from the lower section was selected
+  // maybe use sort() to handle straights
+
+
+  //handle totals and added bonuses from sections MAYBE in another funtion
 }
 
 function comparePicks() {
