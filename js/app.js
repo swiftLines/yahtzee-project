@@ -278,17 +278,16 @@ function applyScoreToCard(evt) {
 
   //**>if evt comes from upperSec
   
-  let catNum = 11  //parseInt(evt.target.id)
+  let catNum = 6  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
   //****>   sum === 0
   //****>   else  execute below statements 
-  // let eligibleNums = picks.filter(num => num === catNum)
-  // sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
+  let eligibleNums = picks.filter(num => num === catNum)
+  sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
   //element.innertext = sum
-  //Do below if player stay with 2 player and object is needed
-  //player.category = sum
+  //player.category = sum //have if stay with 2 player and object is needed
   // console.log(sum)
 
   // let value
@@ -302,7 +301,7 @@ function applyScoreToCard(evt) {
   //   }
   // }
   // sum /= 2
-picks = [5,5,5,5,5]
+picks = [5,2,5,2,5]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -316,9 +315,20 @@ picks = [5,5,5,5,5]
   switch (catNum) {
   //****> if evt comes from id#6
     case 6:
+      console.log('in 3 of kind')
       //******> if picks[] has less than 3 of a kind add score of 0 to card and player
-      //if(arr)
       //******> else total all numbers and add score of 0 to card and player
+      let values = picks.reduce((obj, dice) => {
+        if (obj[dice]) {
+            obj[dice]++
+        }else {
+          obj[dice] = 1
+        }
+        return obj
+      }, {})
+      //check if values has a pair and 3 of a kind by either:
+        // A) if values[0] = 2 OR values[0] 3 AND values[1] = 2 OR values[1] = 3
+        // B) if values contains 2 keys
       break;
   //****> else if evt comes from id#7
     case 7:
@@ -326,34 +336,59 @@ picks = [5,5,5,5,5]
   //******> else total all numbers and add score of 0 to card and player
       break;
   //****> else if evt comes from id#8
-    case 8:
+    case 8://***FULLHOUSE
   //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
   //******> else add score of 25 to card and player
-  //****> else if evt comes from id#9
+      let values = picks.reduce((obj, dice) => {
+        if (obj[dice]) {
+          obj[dice]++
+        }else {
+          obj[dice] = 1
+        }
+        return obj
+      }, {})
+  //check if values has a pair and 3 of a kind by either:
+    // A) if values[0] = 2 OR values[0] 3 AND values[1] = 2 OR values[1] = 3
+    // B) if values contains 2 keys
+      if ((values[0] === 2 || values[0] === 3) && (values[1] === 2 || values[1] === 3)) {
+        //element.innertext = 25
+        //player.category = 25
+      } else {
+        //element.innertext = 0
+        //player.category = 0
+      }
       break;
+  //****> else if evt comes from id#9
     case 9:
   //******> if picks[] does not contain a sequence of four numbers set score to 0
   //******> else set scores to 30 on card and player obj
-  //****> else if evt comes from id#10
       break;
+  //****> else if evt comes from id#10
     case 10:
       console.log('in ten')
   //******> if picks[] does not contain a sequence of 5 numbers set score to 0
   //******> else set scores to 40 on card and player obj
-  //****> else if evt comes from id#11
       break;
-    case 11:
+  //****> else if evt comes from id#11
+    case 11://XXXXXXYAHTZEE
   //******> if picks[] does not contain all same numbers set score to 0
-      if(picks.every((num, i, arr) => num === arr[0])){
-        console.log('Yahtzee!!')
+      if(picks.every((num, i, picks) => num === picks[0])){
+        //element.innertext = 50
+        //player.category = 50
+      } else {
+        //element.innertext = 0
+        //player.category = 0
       }
   //******> else set scores to 50 and (unhide an element for Bonus Yahtzee)possible bonus feature
+      break;
   //****> else if evt comes from id#12
+    case 12: //XXXXXXXCHANCE
+  //******>Sum up all dice and set scores to sum
+      sum = picks.reduce((prev, cur) => prev + cur, 0)
+      //element.innertext = sum
+      //player.category = sum
       break;
-    case 12:
-  //******> Sum up all dice and set scores to sum
   //****> else if evt comes from id#13 after unhidden
-      break;
     case 13://possible bonus feature
   //******> Add score of 100
   }//end switch         

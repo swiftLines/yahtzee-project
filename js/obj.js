@@ -1,7 +1,8 @@
+//Maybe make an array of player objects!!!
 const playerOne = {
   //maybe also have the round count in here so if player has done 
   //13 rounds they cannot roll anymore...or maybe not
-  
+
   totalScore: null, //or maybe an array
   //upper
   aces: null,
