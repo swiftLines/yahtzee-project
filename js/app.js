@@ -287,7 +287,7 @@ function applyScoreToCard(evt) {
   let eligibleNums = picks.filter(num => num === catNum)
   sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
   //element.innertext = sum
-  //Do below if player object is needed
+  //Do below if player stay with 2 player and object is needed
   //player.category = sum
   console.log(sum)
 
@@ -303,13 +303,58 @@ function applyScoreToCard(evt) {
   // }
   // sum /= 2
 
+  //*******Add code to arrange values in sequence from lowest to highest!!!!
+          //for sequence maybe have set arrays to match to and if one of the
+          // arrays match then give the score for the straight
+  //COULD DO CONDITIONAL THAT CONSIDERS DICE VALUE RATHER THAN EVENT
+  //ALSO COULD BE A GOOD PLACE FOR A SWITCH STATEMENT!!! DONT FORGET TO USE BREAK
   //**> else evt comes from lower section 
-  //****> if picks[] contains  
+  //****> if evt comes from id#6
+  //******> if picks[] has less than 3 of a kind add score of 0 to card and player
+            //??Do I really need to keep track of card and player obj or can
+            //??I just get values from card to do end of game totals?
+  //******> else total all numbers and add score of 0 to card and player
+  //****> else if evt comes from id#7
+  //******> if picks[] has less than 4 of a kind add score of 0 to card and player
+  //******> else total all numbers and add score of 0 to card and player
+  //****> else if evt comes from id#8
+  //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
+  //******> else add score of 25 to card and player
+  //****> else if evt comes from id#9
+  //******> if picks[] does not contain a sequence of four numbers set score to 0
+  //******> else set scores to 30 on card and player obj
+  //****> else if evt comes from id#10
+  //******> if picks[] does not contain a sequence of 5 numbers set score to 0
+  //******> else set scores to 40 on card and player obj
+  //****> else if evt comes from id#11
+  //******> if picks[] does not contain all same numbers set score to 0
+  //******> else set scores to 50 and (unhide an element for Bonus Yahtzee)possible bonus feature
+  //****> else if evt comes from id#12
+  //******> Sum up all dice and set scores to sum
+  //****> else if evt comes from id#13 after unhidden
+  //******> Add score of 100
+         
 
 
   //handle totals and added bonuses from sections MAYBE in another funtion
 }
 
+function endGame(){
+  //if any category does not have a score add zero or maybe can use a
+  // method to only add categories with a number value
+
+  //consider if qualified for upper bonus and add to upper total if it is
+
+  //ensure lower section is total
+
+  //add upper and lower to get grand total
+
+  //determine and display the winner maybe in render()
+
+  //confetti!!!
+}
+
+//BONUS FEATURE
 function comparePicks() {
   //maybe compare picks[] with each array in a category object of arrays 
   
