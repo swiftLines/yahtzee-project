@@ -284,9 +284,11 @@ function applyScoreToCard(evt) {
   //****> if(!picks.includes(catNum))
   //****>   sum === 0
   //****>   else  execute below statements 
-  let eligibleNums = arr.filter(num => num === one)
+  let eligibleNums = picks.filter(num => num === catNum)
   sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
   //element.innertext = sum
+  //Do below if player object is needed
+  //player.category = sum
   console.log(sum)
 
   // let value
@@ -301,9 +303,8 @@ function applyScoreToCard(evt) {
   // }
   // sum /= 2
 
-//  *************************************** 
-  // if a category from the lower section was selected
-  // maybe use sort() to handle straights
+  //**> else evt comes from lower section 
+  //****> if picks[] contains  
 
 
   //handle totals and added bonuses from sections MAYBE in another funtion
