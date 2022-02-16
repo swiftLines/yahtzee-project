@@ -278,7 +278,7 @@ function applyScoreToCard(evt) {
 
   //**>if evt comes from upperSec
   
-  let catNum = 6  //parseInt(evt.target.id)
+  let catNum = 10  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
@@ -302,7 +302,7 @@ function applyScoreToCard(evt) {
   // }
   // sum /= 2
 let values  //clear values after switch statement
-picks = [5,2,5,5,5]
+picks = [1,3,6,4,2]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -315,7 +315,7 @@ picks = [5,2,5,5,5]
   //**> else evt comes from lower section 
   switch (catNum) {
   //****> if evt comes from id#6
-    case 6:
+    case 6://3 of a kind
       console.log('in 3 of kind')
       //******> if picks[] has less than 3 of a kind add score of 0 to card and player
       //******> else total all numbers and add score of 0 to card and player
@@ -360,6 +360,7 @@ picks = [5,2,5,5,5]
       break;
   //****> else if evt comes from id#8
     case 8://FULLHOUSE
+    console.log('in fullhous')
   //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
   //******> else add score of 25 to card and player
       values = picks.reduce((obj, dice) => {
@@ -368,6 +369,7 @@ picks = [5,2,5,5,5]
         } else {
           obj[dice] = 1
         }
+        console.log(obj)
         return obj
       }, {})
   //check if values has a pair and 3 of a kind by either:
@@ -383,15 +385,24 @@ picks = [5,2,5,5,5]
       //clear values... Maybe after switch statement
       break;
   //****> else if evt comes from id#9
-    case 9:
+    case 9://Small Straight
   //******> if picks[] does not contain a sequence of four numbers set score to 0
   //******> else set scores to 30 on card and player obj
       break;
   //****> else if evt comes from id#10
-    case 10:
-      console.log('in ten')
+    case 10://Large Straight
+      console.log('in large straight')
   //******> if picks[] does not contain a sequence of 5 numbers set score to 0
   //******> else set scores to 40 on card and player obj
+        if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
+              && picks.includes(5)) {
+          console.log('hi')
+        } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
+        && picks.includes(6)) {
+          console.log('yes')
+        } else {
+          console.log('sorry')
+        }
       break;
   //****> else if evt comes from id#11
     case 11://XXXXXXYAHTZEE
