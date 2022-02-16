@@ -278,7 +278,7 @@ function applyScoreToCard(evt) {
 
   //**>if evt comes from upperSec
   
-  let catNum = 10  //parseInt(evt.target.id)
+  let catNum = 9  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
@@ -302,7 +302,7 @@ function applyScoreToCard(evt) {
   // }
   // sum /= 2
 let values  //clear values after switch statement
-picks = [1,3,6,4,2]
+picks = [5,3,3,4,1]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -388,6 +388,21 @@ picks = [1,3,6,4,2]
     case 9://Small Straight
   //******> if picks[] does not contain a sequence of four numbers set score to 0
   //******> else set scores to 30 on card and player obj
+      if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4)) {
+        //element.innertext = 30
+        //player.category = 30
+      } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) 
+                  && picks.includes(5)) {
+        //element.innertext = 30
+        //player.category = 30
+      } else if (picks.includes(3) && picks.includes(4) && picks.includes(5) 
+                  && picks.includes(6)){
+        //element.innertext = 30
+        //player.category = 30
+      } else {
+        //element.innertext = 0
+        //player.category = 0
+      }
       break;
   //****> else if evt comes from id#10
     case 10://Large Straight
@@ -396,12 +411,15 @@ picks = [1,3,6,4,2]
   //******> else set scores to 40 on card and player obj
         if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
               && picks.includes(5)) {
-          console.log('hi')
+          //element.innertext = 40
+        //player.category = 40
         } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
         && picks.includes(6)) {
-          console.log('yes')
+          //element.innertext = 40
+        //player.category = 40
         } else {
-          console.log('sorry')
+          //element.innertext = 0
+        //player.category = 0
         }
       break;
   //****> else if evt comes from id#11
