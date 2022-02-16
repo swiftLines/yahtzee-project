@@ -301,7 +301,8 @@ function applyScoreToCard(evt) {
   //   }
   // }
   // sum /= 2
-picks = [5,2,5,2,5]
+let values  //clear values after switch statement
+picks = [5,2,5,5,5]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -318,7 +319,7 @@ picks = [5,2,5,2,5]
       console.log('in 3 of kind')
       //******> if picks[] has less than 3 of a kind add score of 0 to card and player
       //******> else total all numbers and add score of 0 to card and player
-      let values = picks.reduce((obj, dice) => {
+      values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
             obj[dice]++
         }else {
@@ -331,18 +332,34 @@ picks = [5,2,5,2,5]
         // B) if values contains 2 keys
       break;
   //****> else if evt comes from id#7
-    case 7:
+    case 7://Four of a Kind
   //******> if picks[] has less than 4 of a kind add score of 0 to card and player
   //******> else total all numbers and add score of 0 to card and player
-      break;
-  //****> else if evt comes from id#8
-    case 8://***FULLHOUSE
-  //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
-  //******> else add score of 25 to card and player
-      let values = picks.reduce((obj, dice) => {
+      values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
           obj[dice]++
-        }else {
+        } else {
+          obj[dice] = 1
+        }
+        return obj
+      }, {})
+      if ((values[0] === 4 || values[0] === 1) && (values[1] === 4 || values[1] === 1)) {
+        sum = picks.reduce((prev, cur) => prev + cur, 0)
+        //element.innertext = sum
+        //player.category = sum
+      } else {
+        //element.innertext = 0
+        //player.category = 0
+      }
+      break;
+  //****> else if evt comes from id#8
+    case 8://FULLHOUSE
+  //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
+  //******> else add score of 25 to card and player
+      values = picks.reduce((obj, dice) => {
+        if (obj[dice]) {
+          obj[dice]++
+        } else {
           obj[dice] = 1
         }
         return obj
@@ -357,6 +374,7 @@ picks = [5,2,5,2,5]
         //element.innertext = 0
         //player.category = 0
       }
+      //clear values... Maybe after switch statement
       break;
   //****> else if evt comes from id#9
     case 9:
