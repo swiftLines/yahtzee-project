@@ -1,9 +1,62 @@
 /*-------------------------------- Constants --------------------------------*/
+// let players =[
+//   //maybe also have the round count in here so if player has done 
+//   playerOne = {
+//   //upper section
+//   aces: null,
+//   twos: null,
+//   threes: null,
+//   fours: null,
+//   fives: null,
+//   sixes: null,
+//   initialUpperTotal: null,
+//   bonus: null,
+//   upperTotal: null,
+//   //lower section
+//   threeOfAKind: null,
+//   fourOfAKind: null,
+//   fullHouse: null,
+//   lowStraight: null,
+//   highStraight: null,
+//   yahtzee: null,
+//   chance: 0,
+//   lowerTotal: null,
+//   grandTotal: null,
+//   //bonus
+//   yahtzeeBonus: null,
+//   currentTotal: null
+//   },
 
+//   playerTwo = {
+//     //upper section
+//     aces: null,
+//     twos: null,
+//     threes: null,
+//     fours: null,
+//     fives: null,
+//     sixes: null,
+//     initialUpperTotal: null,
+//     bonus: null,
+//     upperTotal: null,
+//     //lower section
+//     threeOfAKind: null,
+//     fourOfAKind: null,
+//     fullHouse: null,
+//     lowStraight: null,
+//     highStraight: null,
+//     yahtzee: null,
+//     chance: null,
+//     lowerTotal: null,
+//     grandTotal: null,
+//     //bonus
+//     yahtzeeBonus: null,
+//     currentTotal: null
+//     }
+// ]
 
 /*-------------------------------- Variables --------------------------------*/
 let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
-putBackCount, boardDice=[]
+putBackCount, boardDice=[], pickLimit, message, roundCount
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
@@ -29,13 +82,7 @@ pickdDice.forEach((pick) => {
   pick.addEventListener('click', putDiceBackInPlay)
 })
 
-upperSec.forEach((cat) => {
-  cat.addEventListener('click', applyScoreToCard)
-})
 
-lowerSec.forEach((cat) => {
-  cat.addEventListener('click', applyScoreToCard)
-})
 /*-------------------------------- Functions --------------------------------*/
 //call init()
 init()
@@ -52,28 +99,45 @@ function init() {
   rollCount = 0
 
   //initialize whose turn it is to 1 (player 'one')
-  turn = 1
+  // turn = 1
 
   //initialize counter for number of dice selected
   pickCount = 1
 
-  render()
+  messageEl.innerText= `Click the Here to Play Yahtzee!`
+  messageEl.addEventListener('click', () => {
+    turn = 1
+    render()
+  })
+  
 }
 
 function render() {
 
 //Render a message reflecting the current game state:
-  let message
 
-  if (rollCount === 3) {
+  if (rollCount === 4 && turn === -1 && roundCount === 13) {
+    endGame()
+    
+  } else if (rollCount === 4 && turn === -1) {
     turn *= -1
+    picks = []
+    choices.innerText = ''
+    chooseDice.innerText = ''
+    rollCount = 0
+    roundCount++
+  } else {
+    turn *= -1
+    picks = []
+    choices.innerText = ''
+    chooseDice.innerText = ''
     rollCount = 0
   }
 
-  if (turn === 1) {
-    message = `player one's roll`
-  } else {
+  if (turn === -1) {
     message = `player two's roll`
+  } else if (turn === 1) {
+    message = `player one's roll`
   }
   
   messageEl.innerText = `${message}`
@@ -87,7 +151,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
 
   let diceValue 
 // **** Add another global array to keep track of dice values on board
-  if (rollCount === 3) {
+  if (rollCount === 4) {
     endTurn()
     //Maybe put below statements into endTurn()
     // rollTotal = []
@@ -125,12 +189,12 @@ function diceRoll(evt) { //REMOVE evt if dont use
   //track roll amount
   rollCount++
   
-  //***NEED to total all dice values for only a single roll 
-  //(maybe do towards qualifying combos later....)
-  let total = rollTotal.reduce((sum, cur) => {
-    return sum + cur
-  }, 0)
-  diceTotal.innerText = total;
+  // //***NEED to total all dice values for only a single roll 
+  // //(maybe do towards qualifying combos later....)
+  // let total = rollTotal.reduce((sum, cur) => {
+  //   return sum + cur
+  // }, 0)
+  // diceTotal.innerText = total;
 
   // selectDice()
 
@@ -138,9 +202,10 @@ function diceRoll(evt) { //REMOVE evt if dont use
 }
 
 //allow player to select dice values they want to keep for their combo
-function selectDice(evt) { 
-  //***** only allow 5 values in pics[] 
+function selectDice(evt) {  
   let choice = parseInt(evt.target.innerText)
+  //***** only allow 5 values in pics[]
+  // if (pickLimit < 5)  
   picks.push(choice)
   //have choices display all at once
 
@@ -214,21 +279,23 @@ function endTurn() {
   }
   console.log('in end turn')
   console.log(picks)
-  // 2) MAYBE DO LATER FEATURE MAY NOT BE NECESSARY! compare picks[] 
-  //    (or may need a new data structure) to categories
-  //    so that player can be aware of categories qualified for compare
-  //      ***** may need to put picks array into specific order to compare
-  //            in certain situations or may always want put them in
-  //            sequence from lowest to highest
-  //      
+  //Display message to select a category
+  
+  message.innerText = `Click a Category to Apply Score`
+  
   // 3) allow player to apply their picks to a category 
   //      ***** display all categories as scorecard (start with creating HTML elements)
   //      ***** allow player to click on a category element to apply picks
   //      ***** ensure player can use any round towards any category
   //            wether it qualifies for points or not, but only can select
-  //            category once other than yahtzee. Ensure bonus yahtzee cannot
-  //            be selected if an official scoring yahtzee has not been satisfied
-  // applyScoreToCard()
+  //            category once other than yahtzee. 
+  upperSec.forEach((cat) => {
+    cat.addEventListener('click', applyScoreToCard)
+  })
+  
+  lowerSec.forEach((cat) => {
+    cat.addEventListener('click', applyScoreToCard)
+  })
   // 4) save category score in player object
   // 5) clear appropriate variables and data structures to prepare for next 
   //    turn/round after certain conditions such as score has been set in 
@@ -240,6 +307,21 @@ function endTurn() {
   // choices.innerText = ''
   // chooseDice.innerText = ''
   // render()
+}
+
+function endGame(){
+  //if any category does not have a score add zero or maybe can use a
+  // method to only add categories with a number value
+
+  //consider if qualified for upper bonus and add to upper total if it is
+
+  //ensure lower section is total
+
+  //add upper and lower to get grand total
+
+  //determine and display the winner maybe in render()
+
+  //confetti!!!
 }
 
 // ****** MAKE it to where this function can only be called after third roll
@@ -275,7 +357,11 @@ function applyScoreToCard(evt) {
  //  ***************************
   //if a category from upper section was selected
   //sum up all of players dice that match the number for that category
-  let catNum = parseInt(evt.target.id)
+  // let catNum = parseInt(evt.target.id)
+  let values  //clear values after switch statement
+let valueKeys
+catNum = 12
+picks = [5,5,5,5,2]
   //**>if evt comes from upperSec
   if (catNum === 1 || catNum === 2 || catNum === 3 
       || catNum === 4 || catNum === 5 || catNum === 6){
@@ -302,10 +388,10 @@ function applyScoreToCard(evt) {
   //   }
   // }
   // sum /= 2
-let values  //clear values after switch statement
-let valueKeys
-catNum = 12
-picks = [5,5,5,5,2]
+// let values  //clear values after switch statement
+// let valueKeys
+// catNum = 12
+// picks = [5,5,5,5,2]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -440,85 +526,21 @@ picks = [5,5,5,5,2]
     case 12: //XXXXXXXCHANCE
       sum = picks.reduce((prev, cur) => prev + cur, 0)
       //element.innertext = sum
-      //player.category = sum
-      console.log(sum)
+      // players[playerOne[chance]]= sum
+      console.log('chance' + sum)
       break;
   // //****> else if evt comes from id#13 after unhidden
   //   case 13://possible bonus feature
   // //******> Add score of 100
   }//end switch         
+  // console.log(player[playerOne[chance]])
 
   //clear values... Maybe after switch statement
   //handle totals and added bonuses from sections MAYBE in another funtion
-}
-}
+  render()
+}//end else
+}//end function
 
-function endGame(){
-  //if any category does not have a score add zero or maybe can use a
-  // method to only add categories with a number value
 
-  //consider if qualified for upper bonus and add to upper total if it is
 
-  //ensure lower section is total
 
-  //add upper and lower to get grand total
-
-  //determine and display the winner maybe in render()
-
-  //confetti!!!
-}
-
-const players =[
-  //maybe also have the round count in here so if player has done 
-  playerOne = {
-  //upper section
-  aces: null,
-  twos: null,
-  threes: null,
-  fours: null,
-  fives: null,
-  sixes: null,
-  initialUpperTotal: null,
-  bonus: null,
-  upperTotal: null,
-  //lower section
-  threeOfAKind: null,
-  fourOfAKind: null,
-  fullHouse: null,
-  lowStraight: null,
-  highStraight: null,
-  yahtzee: null,
-  chance: null,
-  lowerTotal: null,
-  grandTotal: null,
-  //bonus
-  yahtzeeBonus: null,
-  currentTotal: null
-  },
-
-  playerTwo = {
-    //upper section
-    aces: null,
-    twos: null,
-    threes: null,
-    fours: null,
-    fives: null,
-    sixes: null,
-    initialUpperTotal: null,
-    bonus: null,
-    upperTotal: null,
-    //lower section
-    threeOfAKind: null,
-    fourOfAKind: null,
-    fullHouse: null,
-    lowStraight: null,
-    highStraight: null,
-    yahtzee: null,
-    chance: null,
-    lowerTotal: null,
-    grandTotal: null,
-    //bonus
-    yahtzeeBonus: null,
-    currentTotal: null
-    }
-]

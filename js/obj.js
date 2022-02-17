@@ -27,3 +27,58 @@ const playerOne = {
   grandTotal: null,
 
 }
+
+let players =[
+  //maybe also have the round count in here so if player has done 
+  playerOne = {
+  //upper section
+  aces: null,
+  twos: null,
+  threes: null,
+  fours: null,
+  fives: null,
+  sixes: null,
+  initialUpperTotal: null,
+  bonus: null,
+  upperTotal: null,
+  //lower section
+  threeOfAKind: null,
+  fourOfAKind: null,
+  fullHouse: null,
+  lowStraight: null,
+  highStraight: null,
+  yahtzee: null,
+  chance: 0,
+  lowerTotal: null,
+  grandTotal: null,
+  //bonus
+  yahtzeeBonus: null,
+  currentTotal: null
+  },
+
+  playerTwo = {
+    //upper section
+    aces: null,
+    twos: null,
+    threes: null,
+    fours: null,
+    fives: null,
+    sixes: null,
+    initialUpperTotal: null,
+    bonus: null,
+    upperTotal: null,
+    //lower section
+    threeOfAKind: null,
+    fourOfAKind: null,
+    fullHouse: null,
+    lowStraight: null,
+    highStraight: null,
+    yahtzee: null,
+    chance: null,
+    lowerTotal: null,
+    grandTotal: null,
+    //bonus
+    yahtzeeBonus: null,
+    currentTotal: null
+    }
+]
