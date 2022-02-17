@@ -275,10 +275,11 @@ function applyScoreToCard(evt) {
  //  ***************************
   //if a category from upper section was selected
   //sum up all of players dice that match the number for that category
-
+  let catNum = parseInt(evt.target.id)
   //**>if evt comes from upperSec
+  if (catNum === 1 || catNum === 2 || catNum === 3 
+      || catNum === 4 || catNum === 5 || catNum === 6){
   
-  let catNum = 6  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
@@ -303,8 +304,8 @@ function applyScoreToCard(evt) {
   // sum /= 2
 let values  //clear values after switch statement
 let valueKeys
-catNum = 6
-picks = [5,3,4,2,3]
+catNum = 12
+picks = [5,5,5,5,2]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -314,13 +315,10 @@ picks = [5,3,4,2,3]
   //ALSO COULD BE A GOOD PLACE FOR A SWITCH STATEMENT!!! DONT FORGET TO USE BREAK
   //??Do I really need to keep track of card and player obj or can
             //??I just get values from card to do end of game totals?
-  //**> else evt comes from lower section 
+} else {
   switch (catNum) {
-  //****> if evt comes from id#6
     case 6://3 of a kind
       console.log('in 3 of kind')
-      //******> if picks[] has less than 3 of a kind add score of 0 to card and player
-      //******> else total all numbers and add score of 0 to card and player
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
             obj[dice]++
@@ -343,10 +341,7 @@ picks = [5,3,4,2,3]
         //player.category = 0
       }
       break;
-  //****> else if evt comes from id#7
     case 7://Four of a Kind
-  //******> if picks[] has less than 4 of a kind add score of 0 to card and player
-  //******> else total all numbers and add score of 0 to card and player
       console.log('in 4 of kind')
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
@@ -370,11 +365,8 @@ picks = [5,3,4,2,3]
         console.log('sorry')
       }
       break;
-  //****> else if evt comes from id#8
     case 8://FULLHOUSE
     console.log('in fullhous')
-  //******> if picks[] does not have a pair and a 3 of kind add score of 0 to card and player
-  //******> else add score of 25 to card and player
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
           obj[dice]++
@@ -385,7 +377,6 @@ picks = [5,3,4,2,3]
         return obj
       }, {})
       valueKeys = Object.keys(values)
-  //check if values has a pair and 3 of a kind by either:
       if(valueKeys.length === 2 && (values[valueKeys[0]] === 2 
           || values[valueKeys[0]] === 3)) { 
         //element.innertext = 25
@@ -394,42 +385,40 @@ picks = [5,3,4,2,3]
       } else {
         //element.innertext = 0
         //player.category = 0
-      }
-      //clear values... Maybe after switch statement
+      }   
       break;
-  //****> else if evt comes from id#9
     case 9://Small Straight
-  //******> if picks[] does not contain a sequence of four numbers set score to 0
-  //******> else set scores to 30 on card and player obj
       if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4)) {
         //element.innertext = 30
         //player.category = 30
+        console.log('Small Straight')
       } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) 
                   && picks.includes(5)) {
         //element.innertext = 30
         //player.category = 30
+        console.log('Small Straight')
       } else if (picks.includes(3) && picks.includes(4) && picks.includes(5) 
                   && picks.includes(6)){
         //element.innertext = 30
         //player.category = 30
+        console.log('Small Straight')
       } else {
         //element.innertext = 0
         //player.category = 0
       }
       break;
-  //****> else if evt comes from id#10
     case 10://Large Straight
       console.log('in large straight')
-  //******> if picks[] does not contain a sequence of 5 numbers set score to 0
-  //******> else set scores to 40 on card and player obj
         if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
               && picks.includes(5)) {
           //element.innertext = 40
         //player.category = 40
+        console.log('large straight')
         } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
         && picks.includes(6)) {
           //element.innertext = 40
         //player.category = 40
+        console.log('large straight')
         } else {
           //element.innertext = 0
         //player.category = 0
@@ -437,30 +426,31 @@ picks = [5,3,4,2,3]
       break;
   //****> else if evt comes from id#11
     case 11://XXXXXXYAHTZEE
-  //******> if picks[] does not contain all same numbers set score to 0
       if(picks.every((num, i, picks) => num === picks[0])){
         //element.innertext = 50
         //player.category = 50
+        console.log('yahtzee')
       } else {
         //element.innertext = 0
         //player.category = 0
       }
-  //******> else set scores to 50 and (unhide an element for Bonus Yahtzee)possible bonus feature
+  //******> else set scores to 50 and (unhide an element for
+  // Bonus Yahtzee)possible bonus feature
       break;
-  //****> else if evt comes from id#12
     case 12: //XXXXXXXCHANCE
-  //******>Sum up all dice and set scores to sum
       sum = picks.reduce((prev, cur) => prev + cur, 0)
       //element.innertext = sum
       //player.category = sum
+      console.log(sum)
       break;
-  //****> else if evt comes from id#13 after unhidden
-    case 13://possible bonus feature
-  //******> Add score of 100
+  // //****> else if evt comes from id#13 after unhidden
+  //   case 13://possible bonus feature
+  // //******> Add score of 100
   }//end switch         
 
-
+  //clear values... Maybe after switch statement
   //handle totals and added bonuses from sections MAYBE in another funtion
+}
 }
 
 function endGame(){
@@ -478,8 +468,57 @@ function endGame(){
   //confetti!!!
 }
 
-//BONUS FEATURE
-function comparePicks() {
-  //maybe compare picks[] with each array in a category object of arrays 
-  
-}
+const players =[
+  //maybe also have the round count in here so if player has done 
+  playerOne = {
+  //upper section
+  aces: null,
+  twos: null,
+  threes: null,
+  fours: null,
+  fives: null,
+  sixes: null,
+  initialUpperTotal: null,
+  bonus: null,
+  upperTotal: null,
+  //lower section
+  threeOfAKind: null,
+  fourOfAKind: null,
+  fullHouse: null,
+  lowStraight: null,
+  highStraight: null,
+  yahtzee: null,
+  chance: null,
+  lowerTotal: null,
+  grandTotal: null,
+  //bonus
+  yahtzeeBonus: null,
+  currentTotal: null
+  },
+
+  playerTwo = {
+    //upper section
+    aces: null,
+    twos: null,
+    threes: null,
+    fours: null,
+    fives: null,
+    sixes: null,
+    initialUpperTotal: null,
+    bonus: null,
+    upperTotal: null,
+    //lower section
+    threeOfAKind: null,
+    fourOfAKind: null,
+    fullHouse: null,
+    lowStraight: null,
+    highStraight: null,
+    yahtzee: null,
+    chance: null,
+    lowerTotal: null,
+    grandTotal: null,
+    //bonus
+    yahtzeeBonus: null,
+    currentTotal: null
+    }
+]
