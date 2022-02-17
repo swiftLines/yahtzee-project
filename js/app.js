@@ -1,58 +1,58 @@
 /*-------------------------------- Constants --------------------------------*/
-// let players =[
-//   //maybe also have the round count in here so if player has done 
-//   playerOne = {
-//   //upper section
-//   aces: null,
-//   twos: null,
-//   threes: null,
-//   fours: null,
-//   fives: null,
-//   sixes: null,
-//   initialUpperTotal: null,
-//   bonus: null,
-//   upperTotal: null,
-//   //lower section
-//   threeOfAKind: null,
-//   fourOfAKind: null,
-//   fullHouse: null,
-//   lowStraight: null,
-//   highStraight: null,
-//   yahtzee: null,
-//   chance: 0,
-//   lowerTotal: null,
-//   grandTotal: null,
-//   //bonus
-//   yahtzeeBonus: null,
-//   currentTotal: null
-//   },
 
-//   playerTwo = {
-//     //upper section
-//     aces: null,
-//     twos: null,
-//     threes: null,
-//     fours: null,
-//     fives: null,
-//     sixes: null,
-//     initialUpperTotal: null,
-//     bonus: null,
-//     upperTotal: null,
-//     //lower section
-//     threeOfAKind: null,
-//     fourOfAKind: null,
-//     fullHouse: null,
-//     lowStraight: null,
-//     highStraight: null,
-//     yahtzee: null,
-//     chance: null,
-//     lowerTotal: null,
-//     grandTotal: null,
-//     //bonus
-//     yahtzeeBonus: null,
-//     currentTotal: null
-//     }
-// ]
+  //maybe also have the round count in here so if player has done 
+  playerOne = {
+  //upper section
+  aces: 0,
+  twos: 0,
+  threes: 0,
+  fours: 0,
+  fives: 0,
+  sixes: 0,
+  initialUpperTotal: 0,
+  bonus: 0,
+  upperTotal: 0,
+  //lower section
+  threeOfAKind: 0,
+  fourOfAKind: 0,
+  fullHouse: 0,
+  lowStraight: 0,
+  highStraight: 0,
+  yahtzee: 0,
+  chance: 0,
+  lowerTotal: 0,
+  grandTotal: 0,
+  //bonus
+  yahtzeeBonus: 0,
+  currentTotal: 0
+  }
+
+  playerTwo = {
+    //upper section
+  aces: 0,
+  twos: 0,
+  threes: 0,
+  fours: 0,
+  fives: 0,
+  sixes: 0,
+  initialUpperTotal: 0,
+  bonus: 0,
+  upperTotal: 0,
+  //lower section
+  threeOfAKind: 0,
+  fourOfAKind: 0,
+  fullHouse: 0,
+  lowStraight: 0,
+  highStraight: 0,
+  yahtzee: 0,
+  chance: 0,
+  lowerTotal: 0,
+  grandTotal: 0,
+  //bonus
+  yahtzeeBonus: 0,
+  currentTotal: 0
+    }
+
 
 /*-------------------------------- Variables --------------------------------*/
 let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
@@ -106,7 +106,8 @@ function init() {
 
   messageEl.innerText= `Click the Here to Play Yahtzee!`
   messageEl.addEventListener('click', () => {
-    turn = 1
+    turn = -1
+    roundCount = 1
     render()
   })
   
@@ -115,7 +116,7 @@ function init() {
 function render() {
 
 //Render a message reflecting the current game state:
-
+console.log('This is roll count', rollCount)
   if (rollCount === 4 && turn === -1 && roundCount === 13) {
     endGame()
     
@@ -126,21 +127,22 @@ function render() {
     chooseDice.innerText = ''
     rollCount = 0
     roundCount++
-  } else {
+  } else if (rollCount = 4) {
     turn *= -1
     picks = []
     choices.innerText = ''
     chooseDice.innerText = ''
     rollCount = 0
   }
-
+  
+  console.log('This is turn', turn)
   if (turn === -1) {
     message = `player two's roll`
   } else if (turn === 1) {
     message = `player one's roll`
   }
   
-  messageEl.innerText = `${message}`
+  messageEl.innerText = `${message}, round${roundCount}`
 
   //***** Maybe render if (picks.length > 0) instead of handling in diceRoll
 
@@ -281,7 +283,7 @@ function endTurn() {
   console.log(picks)
   //Display message to select a category
   
-  message.innerText = `Click a Category to Apply Score`
+  messageEl.innerText = `Click a Category to Apply Score`
   
   // 3) allow player to apply their picks to a category 
   //      ***** display all categories as scorecard (start with creating HTML elements)
@@ -310,18 +312,26 @@ function endTurn() {
 }
 
 function endGame(){
-  //if any category does not have a score add zero or maybe can use a
-  // method to only add categories with a number value
+// GET TOTAL FOR UPPER SECTION //for each player
+  // + sum up categories in upper section from score card/player object
+    // - only add categories with a number value
 
-  //consider if qualified for upper bonus and add to upper total if it is
+  // + consider if sum of upper section qualifies (63+) for bonus 
+    // - add 35 to upper total if qualifies
 
-  //ensure lower section is total
+//GET TOTAL FOR LOWER SECTION //for each player
+  // + summarize categories in lower section and add to lower section total
 
-  //add upper and lower to get grand total
+//ADD UPPER AND LOWER SECTION TO GET GRAND TOTAL //for each player
+  // set grand total to sum of upper section total and lower section total
 
-  //determine and display the winner maybe in render()
+//DETERMINE WINNER
+  // + compare playerOne total and playerTwo total
+  // + display winner message and confetti!!
 
-  //confetti!!!
+//Display Replay Button and message 
+
+  //return
 }
 
 // ****** MAKE it to where this function can only be called after third roll
@@ -418,13 +428,28 @@ picks = [5,5,5,5,2]
       if(valueKeys.length <= 3 && (values[valueKeys[0]] >= 3 
         || values[valueKeys[1]] >= 3 || values[valueKeys[2]] >= 3)) { 
         sum = picks.reduce((prev, cur) => prev + cur, 0)
-        //element.innertext = sum  //OR MAYBE I could somehow read all category
-                                  //scores from object and place in card
-        //player.category = sum
-        console.log('got 3')
+        //element.innertext = sum  //OR MAYBE I could somehow read all category//scores from object and place in card
+        if(turn === -1) {
+          playerOne.threeOfAKind = sum
+          console.log('player one 3 kind' + sum)
+          console.log(playerOne.threeOfAKind)
+        } else if (turn === 1) {
+          playerTwo.threeOfAKind = sum
+          console.log('player two 3 kind' + sum)
+          console.log(playerTwo.threeOfAKind)
+        }                          
+                                  
       } else {
         //element.innertext = 0
-        //player.category = 0
+        if(turn === -1) {
+          playerOne.threeOfAKind = sum
+          console.log('player one 3 kind' + 0)
+          console.log(playerOne.threeOfAKind)
+        } else if (turn === 1) {
+          playerTwo.threeOfAKind = sum
+          console.log('player two 3 kind' + 0)
+          console.log(playerTwo.threeOfAKind)
+        }
       }
       break;
     case 7://Four of a Kind
@@ -443,12 +468,27 @@ picks = [5,5,5,5,2]
         || values[valueKeys[1]] >= 4)) { 
         sum = picks.reduce((prev, cur) => prev + cur, 0)
         //element.innertext = sum
-        //player.category = sum
-        console.log('got 4s')
+        if(turn === -1) {
+          playerOne.fourOfAKind = sum
+          console.log('player one 4 kind' + sum)
+          console.log(playerOne.fourOfAKind)
+        } else if (turn === 1) {
+          playerTwo.fourOfAKind = sum
+          console.log('player two 4 kind' + sum)
+          console.log(playerTwo.fourOfAKind)
+        }
+    
       } else {
         //element.innertext = 0
-        //player.category = 0
-        console.log('sorry')
+        if(turn === -1) {
+          playerOne.fourOfAKind = 0
+          console.log('player one 4 kind' + 0)
+          console.log(playerOne.fourOfAKind)
+        } else if (turn === 1) {
+          playerTwo.fourOfAKind = 0
+          console.log('player two 4 kind' + 0)
+          console.log(playerTwo.fourOfAKind)
+        }
       }
       break;
     case 8://FULLHOUSE
@@ -466,55 +506,122 @@ picks = [5,5,5,5,2]
       if(valueKeys.length === 2 && (values[valueKeys[0]] === 2 
           || values[valueKeys[0]] === 3)) { 
         //element.innertext = 25
-        //player.category = 25
-        console.log("house is full")
+        if(turn === -1) {
+          playerOne.fullHouse = 25
+          console.log('player one fullhouse' + 25)
+          console.log(playerOne.fullHouse)
+        } else if (turn === 1) {
+          playerTwo.fullHouse = 25
+          console.log('player two fullhouse' + 25)
+          console.log(playerTwo.fullHouse)
+        }
+  
       } else {
         //element.innertext = 0
-        //player.category = 0
+        if(turn === -1) {
+          playerOne.fullHouse = 0
+          console.log('player one fullhouse' + 0)
+          console.log(playerOne.fullHouse)
+        } else if (turn === 1) {
+          playerTwo.fullHouse = 25
+          console.log('player two fullhouse' + 25)
+          console.log(playerTwo.fullHouse)
+        }
       }   
       break;
     case 9://Small Straight
-      if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4)) {
+      if ((picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4))
+          || (picks.includes(2) && picks.includes(3) && picks.includes(4) 
+          && picks.includes(5)) || (picks.includes(3) && picks.includes(4) && picks.includes(5) 
+          && picks.includes(6))) {
         //element.innertext = 30
-        //player.category = 30
-        console.log('Small Straight')
-      } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) 
-                  && picks.includes(5)) {
-        //element.innertext = 30
-        //player.category = 30
-        console.log('Small Straight')
-      } else if (picks.includes(3) && picks.includes(4) && picks.includes(5) 
-                  && picks.includes(6)){
-        //element.innertext = 30
-        //player.category = 30
-        console.log('Small Straight')
+        if(turn === -1) {
+          playerOne.lowStraight = 30
+          console.log('player one S straight' + 30)
+          console.log(playerOne.lowStraight)
+        } else if (turn === 1) {
+          playerTwo.lowStraight = 30
+          console.log('player two S straight' + 30)
+          console.log(playerTwo.lowStraight)
+        }
+      // } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) 
+      //             && picks.includes(5)) {
+      //   //element.innertext = 30
+      //   //player.category = 30
+      //   console.log('Small Straight')
+      // } else if (picks.includes(3) && picks.includes(4) && picks.includes(5) 
+      //             && picks.includes(6)){
+      //   //element.innertext = 30
+      //   //player.category = 30
+      //   console.log('Small Straight')
       } else {
         //element.innertext = 0
-        //player.category = 0
+        if(turn === -1) {
+          playerOne.lowStraight = 0
+          console.log('player one S straight' + 0)
+          console.log(playerOne.lowStraight)
+        } else if (turn === 1) {
+          playerTwo.lowStraight = 0
+          console.log('player two S straight' + 0)
+          console.log(playerTwo.lowStraight)
+        }
       }
+    
       break;
     case 10://Large Straight
       console.log('in large straight')
-        if (picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
-              && picks.includes(5)) {
+        if ((picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
+              && picks.includes(5)) || (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
+              && picks.includes(6))) {
           //element.innertext = 40
-        //player.category = 40
-        console.log('large straight')
-        } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
-        && picks.includes(6)) {
-          //element.innertext = 40
-        //player.category = 40
-        console.log('large straight')
+          if(turn === -1) {
+            playerOne.highStraight = 40
+            console.log('player one L straight' + 40)
+            console.log(playerOne.highStraight)
+          } else if (turn === 1) {
+            playerTwo.highStraight = 40
+            console.log('player two L straight' + 40)
+            console.log(playerTwo.highStraight)
+            console.log('large straight')
+        // } else if (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
+        // && picks.includes(6)) {
+        //   //element.innertext = 40
+        //   if(turn === 1) {
+        //   playerOne.highStraight = 40
+        //   console.log('player one L straight' + 40)
+        //   console.log(playerOne.highStraight)
+        // } else if (turn === 1) {
+        //   playerTwo.highStraight = 40
+        //   console.log('player two L straight' + 40)
+        //   console.log(playerTwo.highStraight)
+        //   console.log('large straight')
         } else {
           //element.innertext = 0
-        //player.category = 0
+          if(turn === -1) {
+            playerOne.highStraight = 0
+            console.log('player one L straight')
+            console.log(playerOne.highStraight)
+          } else if (turn === 1) {
+            playerTwo.highStraight = 0
+            console.log('player two L straight' + 0)
+            console.log(playerTwo.highStraight)
+          }
         }
+      }
       break;
   //****> else if evt comes from id#11
     case 11://XXXXXXYAHTZEE
       if(picks.every((num, i, picks) => num === picks[0])){
         //element.innertext = 50
-        //player.category = 50
+        if(turn === -1) {
+          playerOne.yahtzee = 50
+          console.log('player one yahtzee' + 50)
+          console.log(playerOne.yahtzee)
+        } else if (turn === 1) {
+          playerTwo.yahtzee = 50
+          console.log('player two yahtzee' + 50)
+          console.log(playerTwo.yahtzee)
+        }
         console.log('yahtzee')
       } else {
         //element.innertext = 0
@@ -526,8 +633,15 @@ picks = [5,5,5,5,2]
     case 12: //XXXXXXXCHANCE
       sum = picks.reduce((prev, cur) => prev + cur, 0)
       //element.innertext = sum
-      // players[playerOne[chance]]= sum
-      console.log('chance' + sum)
+      if(turn === -1) {
+        playerOne.chance = sum
+        console.log('player one chance' + sum)
+        console.log(playerOne.chance)
+      } else if (turn === 1) {
+        playerTwo.chance = sum
+        console.log('player two chance' + sum)
+        console.log(playerTwo.chance)
+      }
       break;
   // //****> else if evt comes from id#13 after unhidden
   //   case 13://possible bonus feature
