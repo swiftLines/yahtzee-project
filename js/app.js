@@ -278,7 +278,7 @@ function applyScoreToCard(evt) {
 
   //**>if evt comes from upperSec
   
-  let catNum = 9  //parseInt(evt.target.id)
+  let catNum = 6  //parseInt(evt.target.id)
   let sum 
   
   //****> if(!picks.includes(catNum))
@@ -302,7 +302,9 @@ function applyScoreToCard(evt) {
   // }
   // sum /= 2
 let values  //clear values after switch statement
-picks = [5,3,3,4,1]
+let valueKeys
+catNum = 6
+picks = [5,3,4,2,3]
   //*******Add code to arrange values in sequence from lowest to highest!!!!
           //for sequence maybe have set arrays to match to and if one of the
           // arrays match then give the score for the straight
@@ -327,11 +329,15 @@ picks = [5,3,3,4,1]
         }
         return obj
       }, {})
-      if(values[0] === 3 || values[1] === 3) {
+      console.log(values)
+      valueKeys = Object.keys(values)
+      if(valueKeys.length <= 3 && (values[valueKeys[0]] >= 3 
+        || values[valueKeys[1]] >= 3 || values[valueKeys[2]] >= 3)) { 
         sum = picks.reduce((prev, cur) => prev + cur, 0)
         //element.innertext = sum  //OR MAYBE I could somehow read all category
                                   //scores from object and place in card
         //player.category = sum
+        console.log('got 3')
       } else {
         //element.innertext = 0
         //player.category = 0
@@ -341,6 +347,7 @@ picks = [5,3,3,4,1]
     case 7://Four of a Kind
   //******> if picks[] has less than 4 of a kind add score of 0 to card and player
   //******> else total all numbers and add score of 0 to card and player
+      console.log('in 4 of kind')
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
           obj[dice]++
@@ -349,13 +356,18 @@ picks = [5,3,3,4,1]
         }
         return obj
       }, {})
-      if (values[0] === 4 || values[1] === 4) {
+      console.log(values)
+      valueKeys = Object.keys(values)
+      if(valueKeys.length <= 2 && (values[valueKeys[0]] >= 4 
+        || values[valueKeys[1]] >= 4)) { 
         sum = picks.reduce((prev, cur) => prev + cur, 0)
         //element.innertext = sum
         //player.category = sum
+        console.log('got 4s')
       } else {
         //element.innertext = 0
         //player.category = 0
+        console.log('sorry')
       }
       break;
   //****> else if evt comes from id#8
@@ -372,12 +384,13 @@ picks = [5,3,3,4,1]
         console.log(obj)
         return obj
       }, {})
+      valueKeys = Object.keys(values)
   //check if values has a pair and 3 of a kind by either:
-    // A) if values[0] = 2 OR values[0] 3 AND values[1] = 2 OR values[1] = 3
-    // B) if values contains 2 keys
-      if ((values[0] === 2 || values[0] === 3) && (values[1] === 2 || values[1] === 3)) {
+      if(valueKeys.length === 2 && (values[valueKeys[0]] === 2 
+          || values[valueKeys[0]] === 3)) { 
         //element.innertext = 25
         //player.category = 25
+        console.log("house is full")
       } else {
         //element.innertext = 0
         //player.category = 0
