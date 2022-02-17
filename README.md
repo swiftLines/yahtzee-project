@@ -1,2 +1,2 @@
 # Yahtzee
-<img src ="https://imgur.com/a/V0ybTMq.jpg">
+<img src ="https://i.imgur.com/vWV3VbU.jpg">
