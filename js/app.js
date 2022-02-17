@@ -5,21 +5,21 @@
   //upper section
   aces: 0,
   twos: 0,
-  threes: 0,
-  fours: 0,
-  fives: 0,
-  sixes: 0,
+  threes: 3,
+  fours: 16,
+  fives: 20,
+  sixes: 24,
   initialUpperTotal: 0,
   bonus: 0,
   upperTotal: 0,
   //lower section
   threeOfAKind: 0,
   fourOfAKind: 0,
-  fullHouse: 0,
+  fullHouse: 25,
   lowStraight: 0,
   highStraight: 0,
   yahtzee: 0,
-  chance: 0,
+  chance: 28,
   lowerTotal: 0,
   grandTotal: 0,
   //bonus
@@ -313,20 +313,65 @@ function endTurn() {
 
 function endGame(){
 // GET TOTAL FOR UPPER SECTION //for each player
+ 
   // + sum up categories in upper section from score card/player object
-    // - only add categories with a number value
+  let pOneUpperSum = 0
+  let pOneUpperArr = Object.keys(playerOne)
+  for(let i = 0;i < 6; i++){
+    pOneUpperSum += playerOne[pOneUpperArr[i]]
+   }
+   
+   if(pOneUpperSum >= 63) {
+    pOneUpperSum += 35
+  }
+  console.log(pOneUpperSum) 
+//Player 2
+   let pTwoUpperSum = 0
+  let pTwoUpperArr = Object.keys(playerTwo)
+  for(let i = 0;i < 6; i++){
+    pTwoUpperSum += playerTwo[pTwoUpperArr[i]]
+   }
 
-  // + consider if sum of upper section qualifies (63+) for bonus 
+   if(pTwoUpperSum >= 63) {
+    pTwoUpperSum += 35
+  }
+  console.log(pTwoUpperSum) 
+// + consider if sum of upper section qualifies (63+) for bonus 
     // - add 35 to upper total if qualifies
+  
 
 //GET TOTAL FOR LOWER SECTION //for each player
   // + summarize categories in lower section and add to lower section total
+  let pOneLowerSum = 0
+  let pOneLowerArr = Object.keys(playerOne)
+  for(let i = 9;i < 16; i++){
+    pOneLowerSum += playerOne[pOneLowerArr[i]]
+  }
+  console.log(pOneLowerSum)
 
+  let pTwoLowerSum = 0
+  let pTwoLowerArr = Object.keys(playerTwo)
+  for(let i = 9;i < 16; i++){
+    pTwoLowerSum += playerTwo[pTwoLowerArr[i]]
+  }
+  console.log(pTwoLowerSum)
 //ADD UPPER AND LOWER SECTION TO GET GRAND TOTAL //for each player
   // set grand total to sum of upper section total and lower section total
 
+
+let pOneTotal = pOneUpperSum + pOneLowerSum
+console.log(pOneTotal)
+
+let pTwoTotal = pTwoUpperSum + pTwoLowerSum
+console.log(pTwoTotal)
+
 //DETERMINE WINNER
   // + compare playerOne total and playerTwo total
+  if (pOneTotal > pTwoTotal) {
+    messageEl.innerText `Player One Wins!`
+  } else if (pOneTotal < pTwoTotal) {
+    messageEl.innerText `Player Two Wins!`
+  }
   // + display winner message and confetti!!
 
 //Display Replay Button and message 
@@ -370,8 +415,8 @@ function applyScoreToCard(evt) {
   // let catNum = parseInt(evt.target.id)
   let values  //clear values after switch statement
 let valueKeys
-catNum = 12
-picks = [5,5,5,5,2]
+catNum = parseInt(evt.target.id)
+//picks = [5,5,5,5,2]
   //**>if evt comes from upperSec
   if (catNum === 1 || catNum === 2 || catNum === 3 
       || catNum === 4 || catNum === 5 || catNum === 6){
