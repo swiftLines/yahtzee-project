@@ -5,9 +5,9 @@
   //upper section
   aces: 0,
   twos: 0,
-  threes: 3,
-  fours: 16,
-  fives: 20,
+  threes: 0,
+  fours: 0,
+  fives: 0,
   sixes: 24,
   initialUpperTotal: 0,
   bonus: 0,
@@ -33,7 +33,7 @@
   twos: 0,
   threes: 0,
   fours: 0,
-  fives: 0,
+  fives: 5,
   sixes: 0,
   initialUpperTotal: 0,
   bonus: 0,
@@ -45,7 +45,7 @@
   lowStraight: 0,
   highStraight: 0,
   yahtzee: 0,
-  chance: 0,
+  chance: 100,
   lowerTotal: 0,
   grandTotal: 0,
   //bonus
@@ -57,6 +57,7 @@
 /*-------------------------------- Variables --------------------------------*/
 let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
 putBackCount, boardDice=[], pickLimit, message, roundCount
+let winner = false
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
@@ -117,7 +118,11 @@ function render() {
 
 //Render a message reflecting the current game state:
 console.log('This is roll count', rollCount)
+  rollCount = 4
+  turn = -1
+  roundCount = 13
   if (rollCount === 4 && turn === -1 && roundCount === 13) {
+    console.log('end the game')
     endGame()
     
   } else if (rollCount === 4 && turn === -1) {
@@ -142,8 +147,9 @@ console.log('This is roll count', rollCount)
     message = `player one's roll`
   }
   
+  if(!winner){
   messageEl.innerText = `${message}, round${roundCount}`
-
+  }
   //***** Maybe render if (picks.length > 0) instead of handling in diceRoll
 
 }
@@ -368,11 +374,20 @@ console.log(pTwoTotal)
 //DETERMINE WINNER
   // + compare playerOne total and playerTwo total
   if (pOneTotal > pTwoTotal) {
-    messageEl.innerText `Player One Wins!`
-  } else if (pOneTotal < pTwoTotal) {
-    messageEl.innerText `Player Two Wins!`
+    winner = true
+    messageEl.innerText = `Player One Wins!` 
+    console.log("player 1 wins")
+  } 
+  if (pOneTotal < pTwoTotal) {
+    winner = true
+    messageEl.innerText = `Player Two Wins!`
+    console.log("player 2 wins")
+  } 
+  if (pOneTotal === pTwoTotal){
+    winner = null
+    messageEl.innerText = `Tie...`
   }
-  // + display winner message and confetti!!
+
 
 //Display Replay Button and message 
 
