@@ -1,5 +1,10 @@
 /*-------------------------------- Constants --------------------------------*/
+// Write out two variables for each player
+// Have each player object's key's values add up to the score that correlates to that player
+// Take the value of that player's score and us DOM Manipulation to render each player's score
 
+// Then tackle the favicon. You can reference Tay and Ye lecture from last week or the video Ben posted on the favicon lecture you can find on youtube.
+// Tackle your CSS. Just make sure to center everything, change the background color and the font as well. That should be MVP.
   //maybe also have the round count in here so if player has done 
   playerOne = {
   //upper section
@@ -8,18 +13,18 @@
   threes: 0,
   fours: 0,
   fives: 0,
-  sixes: 24,
+  sixes: 0,
   initialUpperTotal: 0,
   bonus: 0,
   upperTotal: 0,
   //lower section
   threeOfAKind: 0,
   fourOfAKind: 0,
-  fullHouse: 25,
+  fullHouse: 0,
   lowStraight: 0,
   highStraight: 0,
   yahtzee: 0,
-  chance: 28,
+  chance: 0,
   lowerTotal: 0,
   grandTotal: 0,
   //bonus
@@ -33,7 +38,7 @@
   twos: 0,
   threes: 0,
   fours: 0,
-  fives: 5,
+  fives: 0,
   sixes: 0,
   initialUpperTotal: 0,
   bonus: 0,
@@ -45,7 +50,7 @@
   lowStraight: 0,
   highStraight: 0,
   yahtzee: 0,
-  chance: 100,
+  chance: 0,
   lowerTotal: 0,
   grandTotal: 0,
   //bonus
@@ -56,14 +61,15 @@
 
 /*-------------------------------- Variables --------------------------------*/
 let rollTotal=[], selectTotal=[], rollCount, picks=[], turn, pickCount, 
-putBackCount, boardDice=[], pickLimit, message, roundCount
+putBackCount, boardDice=[], pickLimit, message, roundCount, playOneCurTotal,
+playTwoCurTotal
 let winner = false
 //may not need rollTotal as global variable
 
 /*------------------------ Cached Element References ------------------------*/
 const diceX = document.querySelectorAll('#roll')
 const rollBtn = document.querySelector('button')
-let diceTotal = document.querySelector('#total')
+let curTotal = document.querySelector('#total')
 let chooseDice = document.querySelector('#select')
 let choices = document.querySelector('#choices')
 let messageEl = document.querySelector('#message')
@@ -115,12 +121,8 @@ function init() {
 }
 
 function render() {
-
 //Render a message reflecting the current game state:
-console.log('This is roll count', rollCount)
-  rollCount = 4
-  turn = -1
-  roundCount = 13
+console.log('back in render()')
   if (rollCount === 4 && turn === -1 && roundCount === 13) {
     console.log('end the game')
     endGame()
@@ -132,12 +134,14 @@ console.log('This is roll count', rollCount)
     chooseDice.innerText = ''
     rollCount = 0
     roundCount++
-  } else if (rollCount = 4) {
+    boardDice = []
+  } else if (rollCount = 3) {
     turn *= -1
     picks = []
     choices.innerText = ''
     chooseDice.innerText = ''
     rollCount = 0
+    boardDice = []
   }
   
   console.log('This is turn', turn)
@@ -145,6 +149,12 @@ console.log('This is roll count', rollCount)
     message = `player two's roll`
   } else if (turn === 1) {
     message = `player one's roll`
+  }
+
+  if (turn === -1) {
+    curTotal.innerText = `${playOneCurTotal}`
+  } else if (turn === 1) {
+    curTotal.innertext = `${playTwoCurTotal}`
   }
   
   if(!winner){
@@ -155,11 +165,14 @@ console.log('This is roll count', rollCount)
 }
 
 //rolls dice
-function diceRoll(evt) { //REMOVE evt if dont use 
+function diceRoll() { //REMOVE evt if dont use 
 
   let diceValue 
+  
+  rollCount++
+  console.log(rollCount)
 // **** Add another global array to keep track of dice values on board
-  if (rollCount === 4) {
+  if (rollCount === 3) {
     endTurn()
     //Maybe put below statements into endTurn()
     // rollTotal = []
@@ -170,14 +183,23 @@ function diceRoll(evt) { //REMOVE evt if dont use
   } else {
     //Keep selected dice removed from play 
     if (picks.length > 0) {
+      console.log('selected dice in picks[]', picks)
+      console.log('pickCount', pickCount)
       for (let dice of diceX) {
-        if (pickCount === picks.length) {
+        if (pickCount >= picks.length) {
           // dice.innerText = ''
+          console.log('picks[]', picks)
+          console.log('pickCount', pickCount)
+          console.log('dice element', dice)
           break
         } else {
           diceValue = Math.floor(Math.random() * 5) + 1
           dice.innerText = diceValue;
           pickCount++
+          console.log('picks[]', picks)
+          console.log('pickCount', pickCount)
+          console.log('dice element', dice)
+          console.log('dice number', diceValue)
           
         }
       }
@@ -185,8 +207,6 @@ function diceRoll(evt) { //REMOVE evt if dont use
       diceX.forEach((dice) => {
         diceValue = Math.floor(Math.random() * 6) + 1
         dice.innerText = diceValue;
-      // maybe use buit-in method for dry code
-        rollTotal.push(diceValue) 
         //Fill array with dice on board ***** May not need boardDice[]
         boardDice.push(diceValue)
       })
@@ -195,7 +215,6 @@ function diceRoll(evt) { //REMOVE evt if dont use
   }
 
   //track roll amount
-  rollCount++
   
   // //***NEED to total all dice values for only a single roll 
   // //(maybe do towards qualifying combos later....)
@@ -207,7 +226,7 @@ function diceRoll(evt) { //REMOVE evt if dont use
   // selectDice()
 
   //reset picks []
-}
+}//end diceRoll()
 
 //allow player to select dice values they want to keep for their combo
 function selectDice(evt) {  
@@ -437,12 +456,15 @@ catNum = parseInt(evt.target.id)
       || catNum === 4 || catNum === 5 || catNum === 6){
   
   let sum 
-  
+  console.log("in upper section")
   //****> if(!picks.includes(catNum))
   //****>   sum === 0
   //****>   else  execute below statements 
   let eligibleNums = picks.filter(num => num === catNum)
+  console.log('filtering numbers', eligibleNums)
   sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
+  console.log('sum of selected', sum)
+
   //element.innertext = sum
   //player.category = sum //have if stay with 2 player and object is needed
   // console.log(sum)
@@ -471,7 +493,9 @@ catNum = parseInt(evt.target.id)
   //ALSO COULD BE A GOOD PLACE FOR A SWITCH STATEMENT!!! DONT FORGET TO USE BREAK
   //??Do I really need to keep track of card and player obj or can
             //??I just get values from card to do end of game totals?
+  render()
 } else {
+
   switch (catNum) {
     case 6://3 of a kind
       console.log('in 3 of kind')
@@ -491,22 +515,23 @@ catNum = parseInt(evt.target.id)
         //element.innertext = sum  //OR MAYBE I could somehow read all category//scores from object and place in card
         if(turn === -1) {
           playerOne.threeOfAKind = sum
+          playOneCurTotal += sum
           console.log('player one 3 kind' + sum)
           console.log(playerOne.threeOfAKind)
         } else if (turn === 1) {
           playerTwo.threeOfAKind = sum
+          playTwoCurTotal += sum
           console.log('player two 3 kind' + sum)
           console.log(playerTwo.threeOfAKind)
         }                          
                                   
       } else {
-        //element.innertext = 0
         if(turn === -1) {
-          playerOne.threeOfAKind = sum
+          playerOne.threeOfAKind = 0
           console.log('player one 3 kind' + 0)
           console.log(playerOne.threeOfAKind)
         } else if (turn === 1) {
-          playerTwo.threeOfAKind = sum
+          playerTwo.threeOfAKind = 0
           console.log('player two 3 kind' + 0)
           console.log(playerTwo.threeOfAKind)
         }
@@ -530,10 +555,12 @@ catNum = parseInt(evt.target.id)
         //element.innertext = sum
         if(turn === -1) {
           playerOne.fourOfAKind = sum
+          playOneCurTotal += sum
           console.log('player one 4 kind' + sum)
           console.log(playerOne.fourOfAKind)
         } else if (turn === 1) {
           playerTwo.fourOfAKind = sum
+          playTwoCurTotal += sum
           console.log('player two 4 kind' + sum)
           console.log(playerTwo.fourOfAKind)
         }
@@ -568,10 +595,12 @@ catNum = parseInt(evt.target.id)
         //element.innertext = 25
         if(turn === -1) {
           playerOne.fullHouse = 25
+          playOneCurTotal += 25
           console.log('player one fullhouse' + 25)
           console.log(playerOne.fullHouse)
         } else if (turn === 1) {
           playerTwo.fullHouse = 25
+          playTwoCurTotal += 25
           console.log('player two fullhouse' + 25)
           console.log(playerTwo.fullHouse)
         }
@@ -583,8 +612,8 @@ catNum = parseInt(evt.target.id)
           console.log('player one fullhouse' + 0)
           console.log(playerOne.fullHouse)
         } else if (turn === 1) {
-          playerTwo.fullHouse = 25
-          console.log('player two fullhouse' + 25)
+          playerTwo.fullHouse = 0
+          console.log('player two fullhouse' + 0)
           console.log(playerTwo.fullHouse)
         }
       }   
@@ -597,10 +626,12 @@ catNum = parseInt(evt.target.id)
         //element.innertext = 30
         if(turn === -1) {
           playerOne.lowStraight = 30
+          playOneCurTotal += 30
           console.log('player one S straight' + 30)
           console.log(playerOne.lowStraight)
         } else if (turn === 1) {
           playerTwo.lowStraight = 30
+          playTwoCurTotal += 30
           console.log('player two S straight' + 30)
           console.log(playerTwo.lowStraight)
         }
@@ -636,10 +667,12 @@ catNum = parseInt(evt.target.id)
           //element.innertext = 40
           if(turn === -1) {
             playerOne.highStraight = 40
+            playOneCurTotal += 40
             console.log('player one L straight' + 40)
             console.log(playerOne.highStraight)
           } else if (turn === 1) {
             playerTwo.highStraight = 40
+            playTwoCurTotal += 40
             console.log('player two L straight' + 40)
             console.log(playerTwo.highStraight)
             console.log('large straight')
@@ -675,17 +708,28 @@ catNum = parseInt(evt.target.id)
         //element.innertext = 50
         if(turn === -1) {
           playerOne.yahtzee = 50
+          playOneCurTotal += 50
+          diceTotal.innerText = playOneCurTotal
           console.log('player one yahtzee' + 50)
           console.log(playerOne.yahtzee)
         } else if (turn === 1) {
           playerTwo.yahtzee = 50
+          playTwoCurTotal += 50
           console.log('player two yahtzee' + 50)
           console.log(playerTwo.yahtzee)
         }
         console.log('yahtzee')
       } else {
         //element.innertext = 0
-        //player.category = 0
+        if(turn === -1) {
+          playerOne.yahtzee = 0
+          console.log('player one L straight')
+          console.log(playerOne.highStraight)
+        } else if (turn === 1) {
+          playerTwo.yahtzee = 0
+          console.log('player two L straight' + 0)
+          console.log(playerTwo.highStraight)
+        }
       }
   //******> else set scores to 50 and (unhide an element for
   // Bonus Yahtzee)possible bonus feature
@@ -695,10 +739,12 @@ catNum = parseInt(evt.target.id)
       //element.innertext = sum
       if(turn === -1) {
         playerOne.chance = sum
+        playOneCurTotal = +sum
         console.log('player one chance' + sum)
         console.log(playerOne.chance)
       } else if (turn === 1) {
         playerTwo.chance = sum
+        playTwoCurTotal = +sum
         console.log('player two chance' + sum)
         console.log(playerTwo.chance)
       }
@@ -711,6 +757,7 @@ catNum = parseInt(evt.target.id)
 
   //clear values... Maybe after switch statement
   //handle totals and added bonuses from sections MAYBE in another funtion
+  console.log('end of scoring')
   render()
 }//end else
 }//end function
