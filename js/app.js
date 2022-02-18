@@ -8,12 +8,12 @@
   //maybe also have the round count in here so if player has done 
   playerOne = {
   //upper section
-  aces: 0,
-  twos: 0,
-  threes: 0,
-  fours: 0,
-  fives: 0,
-  sixes: 0,
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
   initialUpperTotal: 0,
   bonus: 0,
   upperTotal: 0,
@@ -111,6 +111,9 @@ function init() {
   //initialize counter for number of dice selected
   pickCount = 1
 
+  playOneCurTotal = 0
+  playTwoCurTotal = 0
+
   messageEl.innerText= `Click the Here to Play Yahtzee!`
   messageEl.addEventListener('click', () => {
     turn = -1
@@ -123,17 +126,18 @@ function init() {
 function render() {
 //Render a message reflecting the current game state:
 console.log('back in render()')
-  if (rollCount === 4 && turn === -1 && roundCount === 13) {
+  if (rollCount === 3 && turn === -1 && roundCount === 13) {
     console.log('end the game')
     endGame()
     
-  } else if (rollCount === 4 && turn === -1) {
+  } else if (rollCount === 3 && turn === -1) {
     turn *= -1
     picks = []
     choices.innerText = ''
     chooseDice.innerText = ''
     rollCount = 0
     roundCount++
+    console.log('this is round count', roundCount)
     boardDice = []
   } else if (rollCount = 3) {
     turn *= -1
@@ -152,9 +156,9 @@ console.log('back in render()')
   }
 
   if (turn === -1) {
-    curTotal.innerText = `${playOneCurTotal}`
+    curTotal.innerText = playOneCurTotal
   } else if (turn === 1) {
-    curTotal.innertext = `${playTwoCurTotal}`
+    curTotal.innerText = `${playTwoCurTotal}`
   }
   
   if(!winner){
@@ -464,6 +468,16 @@ catNum = parseInt(evt.target.id)
   console.log('filtering numbers', eligibleNums)
   sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
   console.log('sum of selected', sum)
+
+  if(turn === -1) {
+    playerOne.catNum = sum
+    playOneCurTotal += sum
+    console.log('set an upper score')
+  } else if (turn === 1) {
+    playerTwo.catNum = sum
+    playTwoCurTotal += sum
+    console.log('set an upper score')
+  } 
 
   //element.innertext = sum
   //player.category = sum //have if stay with 2 player and object is needed
