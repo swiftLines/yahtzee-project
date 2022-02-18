@@ -27,12 +27,12 @@
 
   playerTwo = {
     //upper section
-  aces: 0,
-  twos: 0,
-  threes: 0,
-  fours: 0,
-  fives: 0,
-  sixes: 0,
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
   initialUpperTotal: 0,
   bonus: 0,
   upperTotal: 0,
