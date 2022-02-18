@@ -126,11 +126,11 @@ function init() {
 function render() {
 //Render a message reflecting the current game state:
 console.log('back in render()')
-  if (rollCount === 3 && turn === -1 && roundCount === 13) {
+  if (rollCount >= 3 && turn === -1 && roundCount === 13) {
     console.log('end the game')
     endGame()
     
-  } else if (rollCount === 3 && turn === -1) {
+  } else if (rollCount >= 3 && turn === -1) {
     turn *= -1
     picks = []
     choices.innerText = ''
@@ -139,7 +139,7 @@ console.log('back in render()')
     roundCount++
     console.log('this is round count', roundCount)
     boardDice = []
-  } else if (rollCount = 3) {
+  } else if (rollCount >= 3) {
     turn *= -1
     picks = []
     choices.innerText = ''
@@ -176,7 +176,7 @@ function diceRoll() { //REMOVE evt if dont use
   rollCount++
   console.log(rollCount)
 // **** Add another global array to keep track of dice values on board
-  if (rollCount === 3) {
+  if (rollCount >= 3) {
     endTurn()
     //Maybe put below statements into endTurn()
     // rollTotal = []
@@ -190,7 +190,7 @@ function diceRoll() { //REMOVE evt if dont use
       console.log('selected dice in picks[]', picks)
       console.log('pickCount', pickCount)
       for (let dice of diceX) {
-        if (pickCount >= picks.length) {
+        if (pickCount == picks.length) {
           // dice.innerText = ''
           console.log('picks[]', picks)
           console.log('pickCount', pickCount)
