@@ -1,9 +1,7 @@
 /*-------------------------------- Constants --------------------------------*/
-// Write out two variables for each player
 // Have each player object's key's values add up to the score that correlates to that player
 // Take the value of that player's score and us DOM Manipulation to render each player's score
 
-// Then tackle the favicon. You can reference Tay and Ye lecture from last week or the video Ben posted on the favicon lecture you can find on youtube.
 // Tackle your CSS. Just make sure to center everything, change the background color and the font as well. That should be MVP.
   //maybe also have the round count in here so if player has done 
   playerOne = {
@@ -114,7 +112,7 @@ function init() {
   playOneCurTotal = 0
   playTwoCurTotal = 0
 
-  messageEl.innerText= `Click the Here to Play Yahtzee!`
+  messageEl.innerText= `Click Here to Play Yahtzee!`
   messageEl.addEventListener('click', () => {
     turn = -1
     roundCount = 1
