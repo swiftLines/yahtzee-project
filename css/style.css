@@ -41,6 +41,10 @@ body {
   text-align: center;
   }
 
+div {
+  padding: 5px;
+}
+
 button:hover {
   background-color: #bebdc9;
 }
@@ -69,4 +73,15 @@ h3{
   background: #a24444;
   box-shadow:  28px 28px 55px #682c2c,
                -28px -28px 55px #dc5c5c;
+}
+
+#choices {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.pick{
+  padding: 0;
 }
