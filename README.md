@@ -2,7 +2,7 @@
 
 #### [Play Yahtzee here](https://swiftlines.github.io/yahtzee-project/)
 ---
-<img src ="https://i.imgur.com/VRyn28J.png">
+<img src ="https://i.imgur.com/J12JiZW.png">
 
 ---
 
