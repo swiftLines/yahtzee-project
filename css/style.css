@@ -33,7 +33,40 @@ body {
   margin: 0;
 }
 
-/* .dice {
-  height: 30px;
-  width: 30px;
-} */
+#message {
+  -webkit-box-shadow: 4px -4px 15px 0px #FF1F1F, 12px -11px 7px 0px #FF9376, 20px -5px 7px 0px #FFE264, 20px 6px 7px 0px #F6FF33, 13px 12px 17px 0px #FF9527, 2px 17px 17px 0px #FF0000, -9px 21px 18px 0px #FFF212, -9px 6px 11px 0px #FF0808, -11px -9px 11px 0px #FFFA17, -11px -9px 11px 0px #FFFA17, 5px 5px 15px 5px rgba(0,0,0,0); 
+  box-shadow: 4px -4px 15px 0px #FF1F1F, 12px -11px 7px 0px #FF9376, 20px -5px 7px 0px #FFE264, 20px 6px 7px 0px #F6FF33, 13px 12px 17px 0px #FF9527, 2px 17px 17px 0px #FF0000, -9px 21px 18px 0px #FFF212, -9px 6px 11px 0px #FF0808, -11px -9px 11px 0px #FFFA17, -11px -9px 11px 0px #FFFA17, 5px 5px 15px 5px rgba(0,0,0,0);
+  border-radius: 10px;
+  width: 500px;
+  text-align: center;
+  }
+
+button:hover {
+  background-color: #bebdc9;
+}
+
+button{
+
+  width: 60px;
+  height: 60px;
+  font-size: large;
+}
+
+h2{
+  width: 200px;
+  text-align: center;
+  border-radius: 47px;
+  background: #a24444;
+  box-shadow:  28px 28px 55px #682c2c,
+               -28px -28px 55px #dc5c5c;
+}
+
+h3{
+  width: 140px;
+  text-align: center;
+  text-align: center;
+  border-radius: 10px;
+  background: #a24444;
+  box-shadow:  28px 28px 55px #682c2c,
+               -28px -28px 55px #dc5c5c;
+}
