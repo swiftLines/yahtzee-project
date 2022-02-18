@@ -114,7 +114,7 @@ function init() {
 
   messageEl.innerText= `Click Here to Play Yahtzee!`
   messageEl.addEventListener('click', () => {
-    turn = -1
+    turn = 1
     roundCount = 1
     render()
   })
@@ -188,7 +188,7 @@ function diceRoll() { //REMOVE evt if dont use
       console.log('selected dice in picks[]', picks)
       console.log('pickCount', pickCount)
       for (let dice of diceX) {
-        if (pickCount == picks.length) {
+        if (pickCount === picks.length) {
           // dice.innerText = ''
           console.log('picks[]', picks)
           console.log('pickCount', pickCount)
@@ -506,10 +506,10 @@ catNum = parseInt(evt.target.id)
   //??Do I really need to keep track of card and player obj or can
             //??I just get values from card to do end of game totals?
   render()
-} else {
+} // else{
 
   switch (catNum) {
-    case 6://3 of a kind
+    case 7://3 of a kind
       console.log('in 3 of kind')
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
@@ -537,19 +537,19 @@ catNum = parseInt(evt.target.id)
           console.log(playerTwo.threeOfAKind)
         }                          
                                   
-      } else {
-        if(turn === -1) {
-          playerOne.threeOfAKind = 0
-          console.log('player one 3 kind' + 0)
-          console.log(playerOne.threeOfAKind)
-        } else if (turn === 1) {
-          playerTwo.threeOfAKind = 0
-          console.log('player two 3 kind' + 0)
-          console.log(playerTwo.threeOfAKind)
-        }
+      // } else {
+      //   if(turn === -1) {
+      //     playerOne.threeOfAKind = 0
+      //     console.log('player one 3 kind' + 0)
+      //     console.log(playerOne.threeOfAKind)
+      //   } else if (turn === 1) {
+      //     playerTwo.threeOfAKind = 0
+      //     console.log('player two 3 kind' + 0)
+      //     console.log(playerTwo.threeOfAKind)
+      //   }
       }
       break;
-    case 7://Four of a Kind
+    case 8://Four of a Kind
       console.log('in 4 of kind')
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
@@ -577,20 +577,20 @@ catNum = parseInt(evt.target.id)
           console.log(playerTwo.fourOfAKind)
         }
     
-      } else {
-        //element.innertext = 0
-        if(turn === -1) {
-          playerOne.fourOfAKind = 0
-          console.log('player one 4 kind' + 0)
-          console.log(playerOne.fourOfAKind)
-        } else if (turn === 1) {
-          playerTwo.fourOfAKind = 0
-          console.log('player two 4 kind' + 0)
-          console.log(playerTwo.fourOfAKind)
-        }
-      }
+      } //else {
+      // //   //element.innertext = 0
+      // //   if(turn === -1) {
+      // //     playerOne.fourOfAKind = 0
+      // //     console.log('player one 4 kind' + 0)
+      // //     console.log(playerOne.fourOfAKind)
+      // //   } else if (turn === 1) {
+      // //     playerTwo.fourOfAKind = 0
+      // //     console.log('player two 4 kind' + 0)
+      // //     console.log(playerTwo.fourOfAKind)
+      // //   }
+      // }
       break;
-    case 8://FULLHOUSE
+    case 9://FULLHOUSE
     console.log('in fullhous')
       values = picks.reduce((obj, dice) => {
         if (obj[dice]) {
@@ -617,20 +617,20 @@ catNum = parseInt(evt.target.id)
           console.log(playerTwo.fullHouse)
         }
   
-      } else {
-        //element.innertext = 0
-        if(turn === -1) {
-          playerOne.fullHouse = 0
-          console.log('player one fullhouse' + 0)
-          console.log(playerOne.fullHouse)
-        } else if (turn === 1) {
-          playerTwo.fullHouse = 0
-          console.log('player two fullhouse' + 0)
-          console.log(playerTwo.fullHouse)
-        }
-      }   
+      } //else {
+      //   //element.innertext = 0
+      //   if(turn === -1) {
+      //     playerOne.fullHouse = 0
+      //     console.log('player one fullhouse' + 0)
+      //     console.log(playerOne.fullHouse)
+      //   } else if (turn === 1) {
+      //     playerTwo.fullHouse = 0
+      //     console.log('player two fullhouse' + 0)
+      //     console.log(playerTwo.fullHouse)
+      //   }
+      //}   
       break;
-    case 9://Small Straight
+    case 10://Small Straight
       if ((picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4))
           || (picks.includes(2) && picks.includes(3) && picks.includes(4) 
           && picks.includes(5)) || (picks.includes(3) && picks.includes(4) && picks.includes(5) 
@@ -657,21 +657,21 @@ catNum = parseInt(evt.target.id)
       //   //element.innertext = 30
       //   //player.category = 30
       //   console.log('Small Straight')
-      } else {
+      } //else {
         //element.innertext = 0
-        if(turn === -1) {
-          playerOne.lowStraight = 0
-          console.log('player one S straight' + 0)
-          console.log(playerOne.lowStraight)
-        } else if (turn === 1) {
-          playerTwo.lowStraight = 0
-          console.log('player two S straight' + 0)
-          console.log(playerTwo.lowStraight)
-        }
-      }
+      //   if(turn === -1) {
+      //     playerOne.lowStraight = 0
+      //     console.log('player one S straight' + 0)
+      //     console.log(playerOne.lowStraight)
+      //   } else if (turn === 1) {
+      //     playerTwo.lowStraight = 0
+      //     console.log('player two S straight' + 0)
+      //     console.log(playerTwo.lowStraight)
+      //   }
+      // }
     
       break;
-    case 10://Large Straight
+    case 11://Large Straight
       console.log('in large straight')
         if ((picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
               && picks.includes(5)) || (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
@@ -700,22 +700,22 @@ catNum = parseInt(evt.target.id)
         //   console.log('player two L straight' + 40)
         //   console.log(playerTwo.highStraight)
         //   console.log('large straight')
-        } else {
-          //element.innertext = 0
-          if(turn === -1) {
-            playerOne.highStraight = 0
-            console.log('player one L straight')
-            console.log(playerOne.highStraight)
-          } else if (turn === 1) {
-            playerTwo.highStraight = 0
-            console.log('player two L straight' + 0)
-            console.log(playerTwo.highStraight)
-          }
-        }
+        } //else {
+        //   //element.innertext = 0
+        //   if(turn === -1) {
+        //     playerOne.highStraight = 0
+        //     console.log('player one L straight')
+        //     console.log(playerOne.highStraight)
+        //   } else if (turn === 1) {
+        //     playerTwo.highStraight = 0
+        //     console.log('player two L straight' + 0)
+        //     console.log(playerTwo.highStraight)
+        //   }
+        // }
       }
       break;
   //****> else if evt comes from id#11
-    case 11://XXXXXXYAHTZEE
+    case 12://XXXXXXYAHTZEE
       if(picks.every((num, i, picks) => num === picks[0])){
         //element.innertext = 50
         if(turn === -1) {
@@ -742,11 +742,11 @@ catNum = parseInt(evt.target.id)
       //     console.log('player two L straight' + 0)
       //     console.log(playerTwo.highStraight)
       //   }
-      // }
+      }
   //******> else set scores to 50 and (unhide an element for
   // Bonus Yahtzee)possible bonus feature
       break;
-    case 12: //XXXXXXXCHANCE
+    case 13: //XXXXXXXCHANCE
       sum = picks.reduce((prev, cur) => prev + cur, 0)
       //element.innertext = sum
       if(turn === -1) {
@@ -771,7 +771,7 @@ catNum = parseInt(evt.target.id)
   //handle totals and added bonuses from sections MAYBE in another funtion
   console.log('end of scoring')
   render()
-}//end else
+//}//end else
 }//end function
 
 
