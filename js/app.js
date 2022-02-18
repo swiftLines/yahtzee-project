@@ -731,18 +731,18 @@ catNum = parseInt(evt.target.id)
           console.log(playerTwo.yahtzee)
         }
         console.log('yahtzee')
-      } else {
-        //element.innertext = 0
-        if(turn === -1) {
-          playerOne.yahtzee = 0
-          console.log('player one L straight')
-          console.log(playerOne.highStraight)
-        } else if (turn === 1) {
-          playerTwo.yahtzee = 0
-          console.log('player two L straight' + 0)
-          console.log(playerTwo.highStraight)
-        }
-      }
+      // } else {
+      //   //element.innertext = 0
+      //   if(turn === -1) {
+      //     playerOne.yahtzee = 0
+      //     console.log('player one L straight')
+      //     console.log(playerOne.highStraight)
+      //   } else if (turn === 1) {
+      //     playerTwo.yahtzee = 0
+      //     console.log('player two L straight' + 0)
+      //     console.log(playerTwo.highStraight)
+      //   }
+      // }
   //******> else set scores to 50 and (unhide an element for
   // Bonus Yahtzee)possible bonus feature
       break;
