@@ -14,22 +14,22 @@ Begin the game by clicking the click here message at the top of the screen.  The
 
 ## Technologies used
 
--- HTML
--- CSS
--- Javascript
--- git
+- HTML
+- CSS
+- Javascript
+- git
 
 ---
 
 ## Ice Box
 
- -- Add score rolled for each category
- -- Add notifications for each category the current roll qualifies for
- -- Display a start screen that has a "YAHTZEE" title, start button, dice, dice cup, and a gameboard
- -- Add animations for rolling the dice out of the dice cup
- -- Add audio for the dice in the dice cup and being rolled onto the board
- -- Add an end of the game celebratory state for the winner
- -- Add unique messages for the category met at the end of a turn
+ - Add score rolled for each category
+ - Add notifications for each category the current roll qualifies for
+ - Display a start screen that has a "YAHTZEE" title, start button, dice, dice cup, and a gameboard
+ - Add animations for rolling the dice out of the dice cup
+ - Add audio for the dice in the dice cup and being rolled onto the board
+ - Add an end of the game celebratory state for the winner
+ - Add unique messages for the category met at the end of a turn
 
 
 
