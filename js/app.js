@@ -153,54 +153,89 @@ function render() {
 }
 
 //rolls dice
-function diceRoll() { 
-  let diceValue 
-  rollCount++
+function diceRoll() {
   if (rollCount >= 3) {
-    endTurn()
-  } else {
-    //Keep selected dice removed from play 
-    if (picks.length > 0) {
-      for (let dice of diceX) {
-        if (pickCount === picks.length) {
-          break
-        } else {
-          diceValue = Math.floor(Math.random() * 5) + 1
-          dice.innerText = diceValue;
-          pickCount++
-        }
-      }
-    } else {
-      diceX.forEach((dice) => {
-        diceValue = Math.floor(Math.random() * 6) + 1
-        dice.innerText = diceValue;
-        //Fill array with dice on board
-        boardDice.push(diceValue)
-      })
-      
-    }
+    endTurn();
+    return;
   }
 
+  rollCount++;
+
+  diceX.forEach((dice, index) => {
+    if (!picks.includes(index)) { // Only roll unkept dice
+      let diceValue = Math.floor(Math.random() * 6) + 1;
+      dice.innerText = diceValue;
+      boardDice[index] = diceValue;
+    }
+  });
+  // let diceValue; 
+  // rollCount++;
+
+  // if (rollCount >= 3) {
+  //   endTurn();
+  //   // return; // Stop further execution
+  // } else {
+  //   // Keep selected dice removed from play 
+  //   if (picks.length > 0) {
+  //     for (let dice of diceX) {
+  //       if (pickCount === picks.length) {
+  //         break
+  //       } else {
+  //         diceValue = Math.floor(Math.random() * 5) + 1
+  //         dice.innerText = diceValue;
+  //         pickCount++
+  //       }
+  //     }
+  //   } else {
+  //     diceX.forEach((dice, index) => {
+  //       diceValue = Math.floor(Math.random() * 6) + 1
+  //       dice.innerText = diceValue;
+  //       // Fill array with dice on board
+  //       boardDice.push(diceValue)
+  //     })
+  //   }  
+  // }
 }//end diceRoll()
 
 //allow player to select dice values they want to keep for their combo
 function selectDice(evt) {  
   let choice = parseInt(evt.target.innerText)
-  
-  picks.push(choice)
+  // Get index of selected die
+  let index = Array.from(diceX).indexOf(evt.target);
 
-  let total = picks.reduce((sum, cur) => {
-    return sum + cur
-  }, 0)
+  if (index === -1 || isNaN(choice)) return; // Prevent errors
+
+  if (!picks.includes(index)) {
+    picks.push(index); // Store the index, not the value
+  }
+
+  let total = picks.reduce((sum, idx) => sum + parseInt(diceX[idx].innerText), 0);
   chooseDice.innerText = total;
 
-  //Remove selected dice from play
-  evt.target.innerText = ''
+  // Visually mark kept dice (instead of deleting the value)
+  evt.target.classList.add("kept");
 
-   let newDiv = document.createElement('div')
-   newDiv.addEventListener('click', putDiceBackInPlay)
-   newDiv.innerText = choice
-   choices.appendChild(newDiv)
+  // Add selected dice to `#choices` (picked dice display)
+  let newDiv = document.createElement('div');
+  newDiv.addEventListener('click', putDiceBackInPlay);
+  newDiv.innerText = choice;
+  choices.appendChild(newDiv);
+  // newDiv.classList.add("kept-dice");
+
+  // picks.push(choice)
+
+  // let total = picks.reduce((sum, cur) => {
+  //   return sum + cur
+  // }, 0)
+  // chooseDice.innerText = total;
+
+  // //Remove selected dice from play
+  // evt.target.innerText = ''
+
+  // let newDiv = document.createElement('div')
+  // newDiv.addEventListener('click', putDiceBackInPlay)
+  // newDiv.innerText = choice
+  // choices.appendChild(newDiv)
 
 }
 
@@ -244,19 +279,19 @@ function endGame(){
   let pOneUpperArr = Object.keys(playerOne)
   for(let i = 0;i < 6; i++){
     pOneUpperSum += playerOne[pOneUpperArr[i]]
-   }
-   
-   if(pOneUpperSum >= 63) {
+  }
+
+  if(pOneUpperSum >= 63) {
     pOneUpperSum += 35
   }
 //Player 2
-   let pTwoUpperSum = 0
+  let pTwoUpperSum = 0
   let pTwoUpperArr = Object.keys(playerTwo)
   for(let i = 0;i < 6; i++){
     pTwoUpperSum += playerTwo[pTwoUpperArr[i]]
-   }
+  }
 
-   if(pTwoUpperSum >= 63) {
+  if(pTwoUpperSum >= 63) {
     pTwoUpperSum += 35
   }
 
@@ -396,7 +431,6 @@ catNum = parseInt(evt.target.id)
         if(turn === -1) {
           playerOne.fullHouse = 25
           playOneCurTotal += 25
-         
         } else if (turn === 1) {
           playerTwo.fullHouse = 25
           playTwoCurTotal += 25
@@ -414,7 +448,7 @@ catNum = parseInt(evt.target.id)
         if(turn === -1) {
           playerOne.lowStraight = 30
           playOneCurTotal += 30
-         
+
         } else if (turn === 1) {
           playerTwo.lowStraight = 30
           playTwoCurTotal += 30
