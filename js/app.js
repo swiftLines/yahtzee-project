@@ -209,7 +209,7 @@ function selectDice(evt) {
     picks.push(index); // Store the index, not the value
   }
 
-  let total = picks.reduce((sum, idx) => sum + parseInt(diceX[idx].innerText), 0);
+  let total = picks.reduce((score, idx) => score + parseInt(diceX[idx].innerText), 0);
   chooseDice.innerText = total;
 
   // Visually mark kept dice (instead of deleting the value)
@@ -224,8 +224,8 @@ function selectDice(evt) {
 
   // picks.push(choice)
 
-  // let total = picks.reduce((sum, cur) => {
-  //   return sum + cur
+  // let total = picks.reduce((score, cur) => {
+  //   return score + cur
   // }, 0)
   // chooseDice.innerText = total;
 
@@ -275,46 +275,46 @@ function endTurn() {
 
 function endGame(){
 // GET TOTAL FOR UPPER SECTION //for each player
-  let pOneUpperSum = 0
+  let pOneUpperscore = 0
   let pOneUpperArr = Object.keys(playerOne)
   for(let i = 0;i < 6; i++){
-    pOneUpperSum += playerOne[pOneUpperArr[i]]
+    pOneUpperscore += playerOne[pOneUpperArr[i]]
   }
 
-  if(pOneUpperSum >= 63) {
-    pOneUpperSum += 35
+  if(pOneUpperscore >= 63) {
+    pOneUpperscore += 35
   }
 //Player 2
-  let pTwoUpperSum = 0
+  let pTwoUpperscore = 0
   let pTwoUpperArr = Object.keys(playerTwo)
   for(let i = 0;i < 6; i++){
-    pTwoUpperSum += playerTwo[pTwoUpperArr[i]]
+    pTwoUpperscore += playerTwo[pTwoUpperArr[i]]
   }
 
-  if(pTwoUpperSum >= 63) {
-    pTwoUpperSum += 35
+  if(pTwoUpperscore >= 63) {
+    pTwoUpperscore += 35
   }
 
 //GET TOTAL FOR LOWER SECTION //for each player
-  let pOneLowerSum = 0
+  let pOneLowerscore = 0
   let pOneLowerArr = Object.keys(playerOne)
   for(let i = 9;i < 16; i++){
-    pOneLowerSum += playerOne[pOneLowerArr[i]]
+    pOneLowerscore += playerOne[pOneLowerArr[i]]
   }
-  console.log(pOneLowerSum)
+  console.log(pOneLowerscore)
 
-  let pTwoLowerSum = 0
+  let pTwoLowerscore = 0
   let pTwoLowerArr = Object.keys(playerTwo)
   for(let i = 9;i < 16; i++){
-    pTwoLowerSum += playerTwo[pTwoLowerArr[i]]
+    pTwoLowerscore += playerTwo[pTwoLowerArr[i]]
   }
-  console.log(pTwoLowerSum)
+  console.log(pTwoLowerscore)
 //ADD UPPER AND LOWER SECTION TO GET GRAND TOTAL //for each player
 
-let pOneTotal = pOneUpperSum + pOneLowerSum
+let pOneTotal = pOneUpperscore + pOneLowerscore
 console.log(pOneTotal)
 
-let pTwoTotal = pTwoUpperSum + pTwoLowerSum
+let pTwoTotal = pTwoUpperscore + pTwoLowerscore
 console.log(pTwoTotal)
 
 //DETERMINE WINNER
@@ -337,27 +337,26 @@ console.log(pTwoTotal)
 function applyScoreToCard(evt) {
 
 let valueKeys
-catNum = parseInt(evt.target.id)
+let catNum = parseInt(evt.target.id)
 
-  if (catNum === 1 || catNum === 2 || catNum === 3 
-      || catNum === 4 || catNum === 5 || catNum === 6){
+  if (catNum >= 1 && catNum <= 6){
   
-  let sum 
-  let eligibleNums = picks.filter(num => num === catNum)
+    let score 
+    let eligibleNums = picks.filter(num => num === catNum)
   
-  sum = eligibleNums.reduce((prev, cur) => prev + cur, 0)
+    score = eligibleNums.reduce((prev, cur) => prev + cur, 0)
 
-  if(turn === -1) {
-    playerOne.catNum = sum
-    playOneCurTotal += sum
-    
-  } else if (turn === 1) {
-    playerTwo.catNum = sum
-    playTwoCurTotal += sum
-    
-  } 
+    if(turn === -1) {
+      playerOne.catNum = score
+      playOneCurTotal += score
+      
+    } else if (turn === 1) {
+      playerTwo.catNum = score
+      playTwoCurTotal += score
+      
+    } 
 
-  render()
+    render()
 } 
 
   switch (catNum) {
@@ -374,18 +373,7 @@ catNum = parseInt(evt.target.id)
       valueKeys = Object.keys(values)
       if(valueKeys.length <= 3 && (values[valueKeys[0]] >= 3 
         || values[valueKeys[1]] >= 3 || values[valueKeys[2]] >= 3)) { 
-        sum = picks.reduce((prev, cur) => prev + cur, 0)
-
-        if(turn === -1) {
-          playerOne.threeOfAKind = sum
-          playOneCurTotal += sum
-          
-        } else if (turn === 1) {
-          playerTwo.threeOfAKind = sum
-          playTwoCurTotal += sum
-          
-        }                          
-                                  
+        score = picks.reduce((prev, cur) => prev + cur, 0)
       }
       break;
     case 8://Four of a Kind
@@ -401,18 +389,7 @@ catNum = parseInt(evt.target.id)
       valueKeys = Object.keys(values)
       if(valueKeys.length <= 2 && (values[valueKeys[0]] >= 4 
         || values[valueKeys[1]] >= 4)) { 
-        sum = picks.reduce((prev, cur) => prev + cur, 0)
-  
-        if(turn === -1) {
-          playerOne.fourOfAKind = sum
-          playOneCurTotal += sum
-          
-        } else if (turn === 1) {
-          playerTwo.fourOfAKind = sum
-          playTwoCurTotal += sum
-        
-        }
-    
+          score = picks.reduce((prev, cur) => prev + cur, 0)
       } 
       break;
     case 9://FULLHOUSE
@@ -427,16 +404,7 @@ catNum = parseInt(evt.target.id)
       valueKeys = Object.keys(values)
       if(valueKeys.length === 2 && (values[valueKeys[0]] === 2 
           || values[valueKeys[0]] === 3)) { 
-
-        if(turn === -1) {
-          playerOne.fullHouse = 25
-          playOneCurTotal += 25
-        } else if (turn === 1) {
-          playerTwo.fullHouse = 25
-          playTwoCurTotal += 25
-          
-        }
-  
+          score = 25;  
       } 
       break;
     case 10://Small Straight
@@ -444,16 +412,7 @@ catNum = parseInt(evt.target.id)
           || (picks.includes(2) && picks.includes(3) && picks.includes(4) 
           && picks.includes(5)) || (picks.includes(3) && picks.includes(4) && picks.includes(5) 
           && picks.includes(6))) {
-        
-        if(turn === -1) {
-          playerOne.lowStraight = 30
-          playOneCurTotal += 30
-
-        } else if (turn === 1) {
-          playerTwo.lowStraight = 30
-          playTwoCurTotal += 30
-          
-        }
+            score = 30;  
       } 
     
       break;
@@ -461,54 +420,38 @@ catNum = parseInt(evt.target.id)
         if ((picks.includes(1) && picks.includes(2) && picks.includes(3) && picks.includes(4) 
               && picks.includes(5)) || (picks.includes(2) && picks.includes(3) && picks.includes(4) && picks.includes(5) 
               && picks.includes(6))) {
-          
-          if(turn === -1) {
-            playerOne.highStraight = 40
-            playOneCurTotal += 40
-        
-          } else if (turn === 1) {
-            playerTwo.highStraight = 40
-            playTwoCurTotal += 40
-        
-        } 
-      }
-      break;
-  
+                score = 40;
+        }
+        break;
     case 12://XXXXXXYAHTZEE
       if(picks.every((num, i, picks) => num === picks[0])){
-        
-        if(turn === -1) {
-          playerOne.yahtzee = 50
-          playOneCurTotal += 50
-          diceTotal.innerText = playOneCurTotal
-          
-        } else if (turn === 1) {
-          playerTwo.yahtzee = 50
-          playTwoCurTotal += 50
-          
-        }
+          score = 50;
       
       }
   
       break;
     case 13: //XXXXXXXCHANCE
-      sum = picks.reduce((prev, cur) => prev + cur, 0)
-      
-      if(turn === -1) {
-        playerOne.chance = sum
-        playOneCurTotal = +sum
-      } else if (turn === 1) {
-        playerTwo.chance = sum
-        playTwoCurTotal = +sum
-      }
+      score = picks.reduce((prev, cur) => prev + cur, 0)
       break;
-  
   }//end switch         
+  
+  // Update the player's score
+  if(turn === -1) {
+    playerOne.chance = score
+    playOneCurTotal = +score
+  } else if (turn === 1) {
+    playerTwo.chance = score
+    playTwoCurTotal = +score
+  }
+
+  // Find the corresponding score display span
+  let scoreDisplay = document.getElementById(`score-${catNum}`);
+
+  // Update the score inside the span
+  if (scoreDisplay) {
+    scoreDisplay.innerText = score;
+  }
 
   render()
 //}//end else
 }//end function
-
-
-
-
